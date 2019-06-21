@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import axios from 'axios';
 import { updateUsername, logout } from "../redux/auth_reducer"
-
+import CharacterCard from './CharacterCard'
 
 
 
@@ -37,6 +37,7 @@ class Home extends Component {
 
 
                     }}>logout</button></div>}
+                    <CharacterCard />
           </div>
         ) : (
             <div >

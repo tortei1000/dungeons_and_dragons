@@ -1,0 +1,46 @@
+module.exports = {
+  getAll: (req, res) => {
+    console.log(`getAll fired`)
+    const db = req.app.get('db')
+    let { id } = req.session.user
+    // id = String(id)
+    console.log(id, 'here is id')
+    // if (req.query.title) {
+    //   let searchTerm = `%${req.query.title}%`
+    //   console.log('here is req', searchTerm)
+    //   db.search([id, searchTerm]).then((recipe) => {
+    //     res.status(200).send(recipe)
+    //   })
+    // } else {
+
+    db.get_chars([id]).then((chars) => {
+      res.status(200).send(chars)
+    }).catch(err => console.log("error", err))
+  },
+
+  newChar: (req, res) => {
+    console.log('newChar was fired')
+    let {char_name} = req.body
+    const db = req.app.get('db')
+    let {id} = req.session.user
+
+    db.new_char([id, char_name]).then((char)=> {
+      res.status(200).send(char)
+
+    }).catch(err=> console.log('error', err))
+  },
+
+  getOne: async (req,res) => {
+    console.log(`getOne fired`, req.body)
+    const db = req.app.get('db')
+    let { id } = req.session.user
+    let {char_name} = req.body
+
+    let thisChar = await db.get_one_char([id, char_name])
+    res.send(thisChar[0])
+    
+  }
+}
+
+  
+

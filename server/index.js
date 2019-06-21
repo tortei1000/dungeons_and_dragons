@@ -4,6 +4,7 @@ const app = express()
 const massive = require('massive')
 const session = require('express-session')
 const Auth_ctrl = require('./controllers/Auth_ctrl')
+const Chars_ctrl = require('./controllers/Chars_ctrl')
 
 
 const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING} = process.env
@@ -34,5 +35,6 @@ app.post('/auth/register', Auth_ctrl.register)
 app.get('/auth/logout', Auth_ctrl.logout)
 app.get('/auth/users', Auth_ctrl.getUsers)
 
-
-
+app.get('/api/chars', Chars_ctrl.getAll)
+app.post('/api/chars/', Chars_ctrl.newChar)
+app.post('/api/character', Chars_ctrl.getOne)

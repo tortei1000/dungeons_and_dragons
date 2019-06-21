@@ -4,6 +4,7 @@ import NewUser from './components/auth/NewUser'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import Home from './components/Home'
+import SingleChar from './components/SingleChar';
 
 export default (
   <Switch>
@@ -15,6 +16,7 @@ export default (
     )} />
     <Route path='/register' component={NewUser} />
     <Route path='/home' component={Home} />
+    <Route path="/singlechar/:char_name" component={SingleChar} />
     
   </Switch>
 )
