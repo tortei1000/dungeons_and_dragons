@@ -47,8 +47,65 @@ module.exports = {
     let {char_name} = req.body
 
     let thisCharLang = await db.get_one_languages([id, char_name])
-    res.send(thisCharLang)
     
+    res.send(thisCharLang)
+        
+  },
+  getOneProf: async (req,res) => {
+    console.log(`getOneProf fired`, req.body)
+    const db = req.app.get('db')
+    let { id } = req.session.user
+    let {char_name} = req.body
+
+    let thisCharProf = await db.get_one_prof([id, char_name])
+    
+    res.send(thisCharProf)
+        
+  },
+
+  getOneAttacks: async (req,res) => {
+    console.log(`getOneAttacks fired`, req.body)
+    const db = req.app.get('db')
+    let { id } = req.session.user
+    let {char_name} = req.body
+
+    let thisCharAttacks = await db.get_one_attacks([id, char_name])
+    
+    res.send(thisCharAttacks)
+        
+  },
+  getOneDPack: async (req,res) => {
+    console.log(`getOneDPack fired`, req.body)
+    const db = req.app.get('db')
+    let { id } = req.session.user
+    let {char_name} = req.body
+
+    let thisCharDPack = await db.get_one_d_pack([id, char_name])
+    
+    res.send(thisCharDPack)
+        
+  },
+  getOneOutlander: async (req,res) => {
+    console.log(`getOneOutlander fired`, req.body)
+    const db = req.app.get('db')
+    let { id } = req.session.user
+    let {char_name} = req.body
+
+    let thisCharOutlander = await db.get_one_outlander([id, char_name])
+    
+    res.send(thisCharOutlander)
+        
+  },
+  getOneFeatures: async (req,res) => {
+    console.log(`getOneFeatures fired`, req.body)
+    const db = req.app.get('db')
+    let { id } = req.session.user
+    let {char_name} = req.body
+
+    let thisCharFeatures = await db.get_one_features([id, char_name])
+    
+    res.send(thisCharFeatures)
+        
   },
 }
 

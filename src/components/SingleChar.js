@@ -4,7 +4,13 @@ import axios from 'axios'
 export default class SingleChar extends Component {
     state = {
         char: [],
-        languages: []
+        languages: [],
+        proficiencies: [],
+        attacks: [],
+        dungeoneerPack: [],
+        outlanderGear: [],
+        features: [],
+
     }
     componentDidMount() {
         let char_name = this.props.match.params.char_name
@@ -16,7 +22,35 @@ export default class SingleChar extends Component {
         })
         axios.post(`/api/languages/`, { char_name }).then(res => {
             this.setState({
-                languages: res.data
+                languages: res.data,
+            })
+        })
+        axios.post(`/api/prof/`, { char_name }).then(res => {
+            this.setState({
+                proficiencies: res.data,
+            })
+        })
+        axios.post(`/api/attacks/`, { char_name }).then(res => {
+            this.setState({
+                attacks: res.data,
+            })
+        })
+
+        axios.post(`/api/dPack/`, { char_name }).then(res => {
+            this.setState({
+                dungeoneerPack: res.data,
+            })
+        })
+
+        axios.post(`/api/outlander/`, { char_name }).then(res => {
+            this.setState({
+                outlanderGear: res.data,
+            })
+        })
+
+        axios.post(`/api/features/`, { char_name }).then(res => {
+            this.setState({
+                features: res.data,
             })
         })
 
@@ -25,7 +59,7 @@ export default class SingleChar extends Component {
     render() {
 
         console.log(this.state.languages)
-        let { char, languages } = this.state
+        let { char, languages, proficiencies, attacks, dungeoneerPack, outlanderGear, features } = this.state
 
         return (
             <>
@@ -86,11 +120,15 @@ export default class SingleChar extends Component {
                     {char.passive_perception}Passive Wisdom (Perception)
                     <div>Other Proficiencies & Languages:
                     <p>Languages:
-                        {languages.map((lag)=>{
-                            return <p>{lag.name}</p>
+                        {languages.map((lag) => {
+                        return <p>{lag.name}</p>
+                    })}
+                        </p>
+                        <p>Proficiencies:
+                        {proficiencies.map((prof) => {
+                            return <p>{prof.name}</p>
                         })}
-                    </p>
-                        <p>Proficiencies:</p>
+                        </p>
                     </div>
                 </div>
                 <div>
@@ -112,9 +150,30 @@ export default class SingleChar extends Component {
                 </div>
                 <div>
                     Attacks & Spellcasting
+                    {attacks.map((atk) => {
+                        return <>
+                            <p>{atk.name}</p>
+                            <p>{atk.atk_bonus}</p>
+                            <p>{atk.damage}</p>
+                            <p>{atk.type}</p>
+                        </>
+                    })}
                 </div>
                 <div>
                     Equipament
+                    {dungeoneerPack.map((pack) => {
+                        return <>
+                            <p>{pack.name}</p>
+                            <p>{pack.quantity}</p>
+                        </>
+                    })}
+
+                    {outlanderGear.map((gear) => {
+                        return <>
+                            <p>{gear.name}</p>
+                            <p>{gear.quantity}</p>
+                        </>
+                    })}
                 </div>
                 <div>
                     <div>
@@ -125,6 +184,14 @@ export default class SingleChar extends Component {
                     </div>
                     <div>
                         Features & Traits
+
+                        {features.map((feature) => {
+                        return <>
+                            <p>{feature.name}</p>
+                            <p>{feature.description}</p>
+                            <p>{feature.uses}</p>
+                        </>
+                    })}
                     </div>
                 </div>
             </>
