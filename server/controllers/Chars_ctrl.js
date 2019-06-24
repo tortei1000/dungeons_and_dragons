@@ -39,7 +39,17 @@ module.exports = {
     let thisChar = await db.get_one_char([id, char_name])
     res.send(thisChar[0])
     
-  }
+  },
+  getOneLang: async (req,res) => {
+    console.log(`getOneLang fired`, req.body)
+    const db = req.app.get('db')
+    let { id } = req.session.user
+    let {char_name} = req.body
+
+    let thisCharLang = await db.get_one_languages([id, char_name])
+    res.send(thisCharLang)
+    
+  },
 }
 
   
