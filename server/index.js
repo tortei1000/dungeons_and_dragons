@@ -5,6 +5,7 @@ const massive = require('massive')
 const session = require('express-session')
 const Auth_ctrl = require('./controllers/Auth_ctrl')
 const Chars_ctrl = require('./controllers/Chars_ctrl')
+const Edit_ctrl = require('./controllers/Edit_ctrl')
 
 
 const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING} = process.env
@@ -44,3 +45,6 @@ app.post('/api/attacks', Chars_ctrl.getOneAttacks)
 app.post('/api/dPack', Chars_ctrl.getOneDPack)
 app.post('/api/outlander', Chars_ctrl.getOneOutlander)
 app.post('/api/features', Chars_ctrl.getOneFeatures)
+
+app.post('/api/charsInfo', Edit_ctrl.editCharInfo)
+app.post('/api/strUp', Edit_ctrl.addStr)

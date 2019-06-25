@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios'
+import { tsParenthesizedType } from '@babel/types';
+import { SSL_OP_SINGLE_DH_USE } from 'constants';
+import { async } from 'q';
 
 export default class SingleChar extends Component {
     state = {
@@ -10,6 +13,71 @@ export default class SingleChar extends Component {
         dungeoneerPack: [],
         outlanderGear: [],
         features: [],
+        edit: false,
+        char_name: null,
+        char_class: null,
+        char_level: null,
+        race: null,
+        background: null,
+        alignment: null,
+        player_name: null,
+        experience_points: null,
+        str: null,
+        dex: null,
+        con: null,
+        intel: null,
+        wis: null,
+        cha: null,
+        inspiration: null,
+        proficiency_bonus: null,
+        sav_str: null,
+        sav_dex: null,
+        sav_con: null,
+        sav_int: null,
+        sav_wis: null,
+        sav_cha: null,
+        armor_class: null,
+        initiative: null,
+        speed: null,
+        hit_point_max: null,
+        current_hit_points: null,
+        temporary_hit_points: null,
+        hit_dice: null,
+        success_1: null,
+        success_2: null,
+        success_3: null,
+        failures_1: null,
+        failures_2: null,
+        failures_3: null,
+        personality_trait: null,
+        ideal: null,
+        bond: null,
+        flaw: null,
+        str_bonus: null,
+        dex_bonus: null,
+        con_bonus: null,
+        int_bonus: null,
+        wis_bonus: null,
+        cha_bonus: null,
+        passive_perception: null,
+        acrobatics: null,
+        animal_handling: null,
+        arcana: null,
+        athletics: null,
+        deception: null,
+        history: null,
+        insight: null,
+        intimidation: null,
+        investigation: null,
+        medicine: null,
+        nature: null,
+        perception: null,
+        performance: null,
+        persuation: null,
+        religion: null,
+        sleight_of_hand: null,
+        stealth: null,
+        survival: null,
 
     }
     componentDidMount() {
@@ -17,7 +85,15 @@ export default class SingleChar extends Component {
         console.log(char_name)
         axios.post(`/api/character/`, { char_name }).then(res => {
             this.setState({
-                char: res.data
+                char: res.data,
+                str: res.data.str,
+                dex: res.data.dex,
+                con: res.data.con,
+                intel: res.data.intel,
+                wis: res.data.wis,
+                cha: res.data.cha,
+                char_name : res.data.char_name
+
             })
         })
         axios.post(`/api/languages/`, { char_name }).then(res => {
@@ -55,6 +131,48 @@ export default class SingleChar extends Component {
         })
 
     }
+    //this calculates the bonus on the stats based on the stats on DB
+    bonusCalc = (num) => {
+        let bonus = (num - 10) / 2
+        if (bonus > 0) {
+            return `+${Math.round(bonus)}`
+        } else {
+            return `-${Math.round(bonus)}`
+        }
+    }
+    //this edit toggle works for charInfo
+    editToggle = () => {
+        this.setState({
+            edit: !this.state.edit
+        })
+    }
+    //this should handle all input boxes except the ones that are nested in state like features, dungeoneer_pack, etc
+    handleChange = (e) => {
+        let { value, name } = e.target
+        this.setState({
+            [name]: value
+        })
+    }
+    //charInfoSave sends to DB 
+    charInfoSave = async (char_name) => {
+        let { char_class, char_level, background, player_name, race, alignment, experience_points } = this.state
+
+        await axios.post('/api/charsInfo', { char_name, char_class, char_level, background, player_name, race, alignment, experience_points })
+        this.editToggle()
+        window.location.reload()
+
+    }
+    //this adds 1 to str on db... still working on refreshing the view automatically
+    strAdd = async() => {
+        let {str, char_name} = this.state
+        this.setState({ str: this.state.str + 1 })
+        console.log(this.state.str)
+        await axios.post('/api/strUp', {char_name, str})
+        
+    }
+
+
+
 
     render() {
 
@@ -64,22 +182,44 @@ export default class SingleChar extends Component {
         return (
             <>
                 <p>CHARACTER NAME: {char.char_name}</p>
-                <div>
-                    <p>Class & Level: {char.char_class} {char.char_level}</p>
-                    <p>Background: {char.background}</p>
-                    <p>Player Name: {char.player_name}</p>
-                    <p>Race: {char.race}</p>
-                    <p>Alignment: {char.alignment}</p>
-                    <p>Experience Poins: {char.experience_points}</p>
-                </div>
+                {/* this is the first conditional render, based on the state condition of edit */}
+                {(this.state.edit) ?
+                    <div style={{ border: 'solid', margin: '1px' }}>
+                        <p>Class & Level: <input name='char_class' placeholder={char.char_class} onChange={this.handleChange} />
+                            <input name='char_level' placeholder={char.char_level} onChange={this.handleChange} /> </p>
+                        <p>Background: <input name='background' placeholder={char.background} onChange={this.handleChange} /></p>
+                        <p>Player Name: <input name='player_name' placeholder={char.player_name} onChange={this.handleChange} /></p>
+                        <p>Race: <input name='race' placeholder={char.race} onChange={this.handleChange} /></p>
+                        <p>Alignment:<input name='alignment' placeholder={char.alignment} onChange={this.handleChange} /> </p>
+                        <p>Experience Poins:<input name='experience_points' placeholder={char.experience_points} onChange={this.handleChange} /> </p>
+                        <button onClick={() => this.charInfoSave(char.char_name)}>save</button>
+                        <button onClick={this.editToggle}>cancel</button>
+                    </div>
+                    :
+                    <div style={{ border: 'solid', margin: '1px' }}>
+                        <button onClick={this.editToggle}>edit</button>
+                        <p>Class & Level: {char.char_class} {char.char_level} </p>
+                        <p>Background: {char.background}</p>
+                        <p>Player Name: {char.player_name}</p>
+                        <p>Race: {char.race}</p>
+                        <p>Alignment: {char.alignment}</p>
+                        <p>Experience Poins: {char.experience_points}</p>
+                    </div>
+                }
                 <div>
                     <div>
-                        <p>Strength: {char.str}</p>
+                        <p>Strength: {char.str} <button onClick={this.strAdd}>+</button> </p>
+                        <p>bonus{this.bonusCalc(char.str)}</p>
                         <p>Dexterity: {char.dex}</p>
+                        <p>bonus{this.bonusCalc(char.dex)}</p>
                         <p>Constitution: {char.con}</p>
+                        <p>bonus{this.bonusCalc(char.con)}</p>
                         <p>Inteligence: {char.intel}</p>
+                        <p>bonus{this.bonusCalc(char.intel)}</p>
                         <p>Wisdon: {char.wis}</p>
+                        <p>bonus{this.bonusCalc(char.wis)}</p>
                         <p>Charisma: {char.cha}</p>
+                        <p>bonus{this.bonusCalc(char.cha)}</p>
                     </div>
                 </div>
                 <div>
@@ -88,7 +228,7 @@ export default class SingleChar extends Component {
                         <p>Proficiency Bonus: {char.proficiency_bonus}</p>
                     </div>
                     <div>Saving throws:
-                    <p>Strength: {char.sav_str}</p>
+                        <p>Strength: {char.sav_str}</p>
                         <p>Dexterity: {char.sav_dex}</p>
                         <p>Constitution: {char.sav_con}</p>
                         <p>Inteligence: {char.sav_int}</p>
@@ -186,12 +326,12 @@ export default class SingleChar extends Component {
                         Features & Traits
 
                         {features.map((feature) => {
-                        return <>
-                            <p>{feature.name}</p>
-                            <p>{feature.description}</p>
-                            <p>{feature.uses}</p>
-                        </>
-                    })}
+                            return <>
+                                <p>{feature.name}</p>
+                                <p>{feature.description}</p>
+                                <p>{feature.uses}</p>
+                            </>
+                        })}
                     </div>
                 </div>
             </>
