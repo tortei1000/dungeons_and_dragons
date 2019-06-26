@@ -11,13 +11,13 @@ module.exports = {
 
   },
 
-  addStr: async (req, res) => {
+  saveAtt: async (req, res) => {
     console.log(`addStr fired`, req.body)
     const db = req.app.get('db')
 
-    let { char_name, str } = req.body
+    let { char_name, str, dex, con, cha, intel, wis  } = req.body
 
-    let newStr = await db.add_str([char_name, str])
+    let newStr = await db.save_att([char_name, str, dex, con, cha, intel, wis])
 
     res.send(newStr)
 
