@@ -6,6 +6,7 @@ import './singleChar.css'
 export default class SingleChar extends Component {
     state = {
         char: [],
+        armorToggle: false,
         languages: [],
         proficiencies: [],
         attacks: [],
@@ -236,53 +237,23 @@ export default class SingleChar extends Component {
     }
 
     //this adds or subs 1 to attributes on state.
-    strAdd = () => {
-        console.log()
-        this.setState({ str: this.state.str + 1 })
+    strAdd = (e) => {
+
+        let { name, value } = e.target
+
+        this.setState({
+            [`${name}`]: eval(value) + 1
+        })
+
     }
-    strSub = () => {
-        this.setState({ str: this.state.str - 1 })
+    strSub = (e) => {
+        let { name, value } = e.target
+
+        this.setState({
+            [`${name}`]: eval(value) - 1
+        })
     }
 
-    dexAdd = () => {
-        console.log()
-        this.setState({ dex: this.state.dex + 1 })
-    }
-    dexSub = () => {
-        this.setState({ dex: this.state.dex - 1 })
-    }
-
-    intelAdd = () => {
-        console.log()
-        this.setState({ intel: this.state.intel + 1 })
-    }
-    intelSub = () => {
-        this.setState({ intel: this.state.intel - 1 })
-    }
-
-    chaAdd = () => {
-        console.log()
-        this.setState({ cha: this.state.cha + 1 })
-    }
-    chaSub = () => {
-        this.setState({ cha: this.state.cha - 1 })
-    }
-
-    conAdd = () => {
-        console.log()
-        this.setState({ con: this.state.con + 1 })
-    }
-    conSub = () => {
-        this.setState({ con: this.state.con - 1 })
-    }
-
-    wisAdd = () => {
-        console.log()
-        this.setState({ wis: this.state.wis + 1 })
-    }
-    wisSub = () => {
-        this.setState({ wis: this.state.wis - 1 })
-    }
 
 
     //this calculates the bonus on the stats based on the stats on DB
@@ -307,6 +278,45 @@ export default class SingleChar extends Component {
         })
     }
 
+    //this saves the skills section to db
+    saveSkills = async () => {
+        let { char_name, inspiration, proficiency_bonus, sav_str, sav_dex, sav_con, sav_int, sav_wis, sav_cha, acrobatics, animal_handling, arcana, athletics,
+            deception, history, insight, intimidation, investigation, medicine, nature, perception, performance, persuation, religion, sleight_of_hand,
+            stealth, survival } = this.state
+        await axios.post('/api/skills', {
+            char_name, inspiration, proficiency_bonus, sav_str, sav_dex, sav_con, sav_int, sav_wis, sav_cha, acrobatics, animal_handling, arcana, athletics,
+            deception, history, insight, intimidation, investigation, medicine, nature, perception, performance, persuation, religion, sleight_of_hand,
+            stealth, survival
+        })
+        this.skillsToggle()
+    }
+
+    //this is the start of the armor section
+    //2 lines for spacing
+
+    armorToggle = () => {
+        this.setState({
+            armorToggle: !this.state.armorToggle
+        })
+    }
+
+    checkboxToggler = (e) => {
+
+        let { name, value } = e.target
+
+        this.setState({
+            [`${name}`]: !eval(value)
+        })
+
+    }
+
+    saveArmor = async () => {
+        let { char_name, armor_class, initiative, speed, hit_point_max, current_hit_points, temporary_hit_points, hit_dice,
+            success_1, success_2, success_3, failures_1, failures_2, failures_3 } = this.state
+        await axios.post('/api/armor', { char_name,armor_class, initiative, speed, hit_point_max, current_hit_points, temporary_hit_points, hit_dice,
+            success_1, success_2, success_3, failures_1, failures_2, failures_3 })
+        this.armorToggle()
+    }
 
 
     render() {
@@ -316,6 +326,7 @@ export default class SingleChar extends Component {
 
         return (
             <div className="single_char_container">
+                <button onClick={() => this.props.history.push('/home')}>change character</button>
                 <div className="name_info_container">
                     <div className="char_name_container">CHARACTER NAME: {char.char_name}</div>
                     {/* this is the first conditional render, based on the state condition of edit */}
@@ -352,28 +363,34 @@ export default class SingleChar extends Component {
                             <button onClick={this.saveAtt}>save</button>
                             <button onClick={this.attToggle}>cancel</button>
                             <div>
-                                <p name='str'>Strength: {this.state.str} <button onClick={this.strAdd}>+</button>
-                                    <button onClick={this.strSub}>-</button></p>
+                                <p name='str'>Strength: {this.state.str}
+                                    <button value='this.state.str' name="str" onClick={e => this.strAdd(e)}>+</button>
+                                    <button value='this.state.str' name="str" onClick={this.strSub}>-</button></p>
                                 <p>bonus{this.bonusCalc(this.state.str)} </p>
 
-                                <p>Dexterity: {this.state.dex} <button onClick={this.dexAdd}>+</button>
-                                    <button onClick={this.dexSub}>-</button></p>
+                                <p>Dexterity: {this.state.dex}
+                                    <button value='this.state.dex' name="dex" onClick={e => this.strAdd(e)}>+</button>
+                                    <button value='this.state.dex' name="dex" onClick={this.strSub}>-</button></p>
                                 <p>bonus{this.bonusCalc(this.state.dex)}</p>
 
-                                <p>Constitution: {this.state.con} <button onClick={this.conAdd}>+</button>
-                                    <button onClick={this.conSub}>-</button></p>
+                                <p>Constitution: {this.state.con}
+                                    <button value='this.state.con' name="con" onClick={e => this.strAdd(e)}>+</button>
+                                    <button value='this.state.con' name="con" onClick={this.strSub}>-</button></p>
                                 <p>bonus{this.bonusCalc(this.state.con)}</p>
 
-                                <p>Inteligence: {this.state.intel} <button onClick={this.intelAdd}>+</button>
-                                    <button onClick={this.intelSub}>-</button></p>
+                                <p>Inteligence: {this.state.intel}
+                                    <button value='this.state.intel' name="intel" onClick={e => this.strAdd(e)}>+</button>
+                                    <button value='this.state.intel' name="intel" onClick={this.strSub}>-</button></p>
                                 <p>bonus{this.bonusCalc(this.state.intel)}</p>
 
-                                <p>Wisdon: {this.state.wis} <button onClick={this.wisAdd}>+</button>
-                                    <button onClick={this.wisSub}>-</button></p>
+                                <p>Wisdon: {this.state.wis}
+                                    <button value='this.state.wis' name="wis" onClick={e => this.strAdd(e)}>+</button>
+                                    <button value='this.state.wis' name="wis" onClick={this.strSub}>-</button></p>
                                 <p>bonus{this.bonusCalc(this.state.wis)}</p>
 
-                                <p>Charisma: {this.state.cha} <button onClick={this.chaAdd}>+</button>
-                                    <button onClick={this.chaSub}>-</button></p>
+                                <p>Charisma: {this.state.cha}
+                                    <button value='this.state.cha' name="cha" onClick={e => this.strAdd(e)}>+</button>
+                                    <button value='this.state.cha' name="cha" onClick={this.strSub}>-</button></p>
                                 <p>bonus{this.bonusCalc(this.state.cha)}</p>
                             </div>
                         </div>
@@ -400,38 +417,39 @@ export default class SingleChar extends Component {
                     {(this.state.skillsToggle) ?
 
                         <div className="skill_section_container">
+                            <button onClick={this.saveSkills}>save</button>
                             <button onClick={this.skillsToggle}>cancel</button>
                             <div>
-                                <p>Insipiration: {char.inspiration}</p>
-                                <p>Proficiency Bonus: {char.proficiency_bonus}</p>
+                                <p>Insipiration: <input name='inspiration' value={this.state.inspiration} onChange={this.handleChange} /></p>
+                                <p>Proficiency Bonus: <input name='proficiency_bonus' value={this.state.proficiency_bonus} onChange={this.handleChange} /></p>
                             </div>
                             <div>Saving throws:
-                                <p>Strength: {char.sav_str}</p>
-                                <p>Dexterity: {char.sav_dex}</p>
-                                <p>Constitution: {char.sav_con}</p>
-                                <p>Inteligence: {char.sav_int}</p>
-                                <p>Wisdon: {char.sav_wis}</p>
-                                <p>Charisma: {char.sav_cha}</p>
+                                <p>Strength: <input name='sav_str' value={this.state.sav_str} onChange={this.handleChange} /></p>
+                                <p>Dexterity: <input name='sav_dex' value={this.state.sav_dex} onChange={this.handleChange} /></p>
+                                <p>Constitution: <input name='sav_con' value={this.state.sav_con} onChange={this.handleChange} /></p>
+                                <p>Inteligence: <input name='sav_int' value={this.state.sav_int} onChange={this.handleChange} /></p>
+                                <p>Wisdon: <input name='sav_wis' value={this.state.sav_wis} onChange={this.handleChange} /></p>
+                                <p>Charisma: <input name='sav_cha' value={this.state.sav_cha} onChange={this.handleChange} /></p>
                             </div>
                             <div>Skills:
-                                <p>{char.acrobatics} Acrobatics (Dex)</p>
-                                <p>{char.animal_handling} Animal Handling (Wis)</p>
-                                <p>{char.arcana} arcana (Int)</p>
-                                <p>{char.athletics} athletics (Str)</p>
-                                <p>{char.deception} deception (Cha)</p>
-                                <p>{char.history} history (Int)</p>
-                                <p>{char.insight} insight (Wis)</p>
-                                <p>{char.intimidation} intimidation (Cha)</p>
-                                <p>{char.investigation} investigation (Int)</p>
-                                <p>{char.medicine} medicine (Wis)</p>
-                                <p>{char.nature} nature (Int)</p>
-                                <p>{char.perception} perception (Wis)</p>
-                                <p>{char.performance} performance (Cha)</p>
-                                <p>{char.persuation} persuation (Cha)</p>
-                                <p>{char.religion} religion (Int)</p>
-                                <p>{char.sleight_of_hand} sleight of hand (Dex)</p>
-                                <p>{char.stealth} stealth (Dex)</p>
-                                <p>{char.survival} survival (Wis)</p>
+                                <p><input name='acrobatics' value={this.state.acrobatics} onChange={this.handleChange} /> Acrobatics (Dex)</p>
+                                <p><input name='animal_handling' value={this.state.animal_handling} onChange={this.handleChange} /> Animal Handling (Wis)</p>
+                                <p><input name='arcana' value={this.state.arcana} onChange={this.handleChange} /> arcana (Int)</p>
+                                <p><input name='athletics' value={this.state.athletics} onChange={this.handleChange} /> athletics (Str)</p>
+                                <p><input name='deception' value={this.state.deception} onChange={this.handleChange} /> deception (Cha)</p>
+                                <p><input name='history' value={this.state.history} onChange={this.handleChange} /> history (Int)</p>
+                                <p><input name='insight' value={this.state.insight} onChange={this.handleChange} /> insight (Wis)</p>
+                                <p><input name='intimidation' value={this.state.intimidation} onChange={this.handleChange} /> intimidation (Cha)</p>
+                                <p><input name='investigation' value={this.state.investigation} onChange={this.handleChange} /> investigation (Int)</p>
+                                <p><input name='medicine' value={this.state.medicine} onChange={this.handleChange} /> medicine (Wis)</p>
+                                <p><input name='nature' value={this.state.nature} onChange={this.handleChange} /> nature (Int)</p>
+                                <p><input name='perception' value={this.state.perception} onChange={this.handleChange} /> perception (Wis)</p>
+                                <p><input name='performance' value={this.state.performance} onChange={this.handleChange} /> performance (Cha)</p>
+                                <p><input name='persuation' value={this.state.persuation} onChange={this.handleChange} /> persuation (Cha)</p>
+                                <p><input name='religion' value={this.state.religion} onChange={this.handleChange} /> religion (Int)</p>
+                                <p><input name='sleight_of_hand' value={this.state.sleight_of_hand} onChange={this.handleChange} /> sleight of hand (Dex)</p>
+                                <p><input name='stealth' value={this.state.stealth} onChange={this.handleChange} /> stealth (Dex)</p>
+                                <p><input name='survival' value={this.state.survival} onChange={this.handleChange} /> survival (Wis)</p>
                             </div>
                         </div>
 
@@ -439,55 +457,95 @@ export default class SingleChar extends Component {
                         <div className="skill_section_container">
                             <button onClick={this.skillsToggle}>edit</button>
                             <div>
-                                <p>Insipiration: {char.inspiration}</p>
-                                <p>Proficiency Bonus: {char.proficiency_bonus}</p>
+                                <p>Insipiration: {this.state.inspiration}</p>
+                                <p>Proficiency Bonus: {this.state.proficiency_bonus}</p>
                             </div>
                             <div>Saving throws:
-                                <p>Strength: {char.sav_str}</p>
-                                <p>Dexterity: {char.sav_dex}</p>
-                                <p>Constitution: {char.sav_con}</p>
-                                <p>Inteligence: {char.sav_int}</p>
-                                <p>Wisdon: {char.sav_wis}</p>
-                                <p>Charisma: {char.sav_cha}</p>
+                                <p>Strength: {this.state.sav_str}</p>
+                                <p>Dexterity: {this.state.sav_dex}</p>
+                                <p>Constitution: {this.state.sav_con}</p>
+                                <p>Inteligence: {this.state.sav_int}</p>
+                                <p>Wisdon: {this.state.sav_wis}</p>
+                                <p>Charisma: {this.state.sav_cha}</p>
                             </div>
                             <div>Skills:
-                                <p>{char.acrobatics} Acrobatics (Dex)</p>
-                                <p>{char.animal_handling} Animal Handling (Wis)</p>
-                                <p>{char.arcana} arcana (Int)</p>
-                                <p>{char.athletics} athletics (Str)</p>
-                                <p>{char.deception} deception (Cha)</p>
-                                <p>{char.history} history (Int)</p>
-                                <p>{char.insight} insight (Wis)</p>
-                                <p>{char.intimidation} intimidation (Cha)</p>
-                                <p>{char.investigation} investigation (Int)</p>
-                                <p>{char.medicine} medicine (Wis)</p>
-                                <p>{char.nature} nature (Int)</p>
-                                <p>{char.perception} perception (Wis)</p>
-                                <p>{char.performance} performance (Cha)</p>
-                                <p>{char.persuation} persuation (Cha)</p>
-                                <p>{char.religion} religion (Int)</p>
-                                <p>{char.sleight_of_hand} sleight of hand (Dex)</p>
-                                <p>{char.stealth} stealth (Dex)</p>
-                                <p>{char.survival} survival (Wis)</p>
+                                <p>{this.state.acrobatics} Acrobatics (Dex)</p>
+                                <p>{this.state.animal_handling} Animal Handling (Wis)</p>
+                                <p>{this.state.arcana} arcana (Int)</p>
+                                <p>{this.state.athletics} athletics (Str)</p>
+                                <p>{this.state.deception} deception (Cha)</p>
+                                <p>{this.state.history} history (Int)</p>
+                                <p>{this.state.insight} insight (Wis)</p>
+                                <p>{this.state.intimidation} intimidation (Cha)</p>
+                                <p>{this.state.investigation} investigation (Int)</p>
+                                <p>{this.state.medicine} medicine (Wis)</p>
+                                <p>{this.state.nature} nature (Int)</p>
+                                <p>{this.state.perception} perception (Wis)</p>
+                                <p>{this.state.performance} performance (Cha)</p>
+                                <p>{this.state.persuation} persuation (Cha)</p>
+                                <p>{this.state.religion} religion (Int)</p>
+                                <p>{this.state.sleight_of_hand} sleight of hand (Dex)</p>
+                                <p>{this.state.stealth} stealth (Dex)</p>
+                                <p>{this.state.survival} survival (Wis)</p>
                             </div>
                         </div>
                     }
                     <div>
-                        <div>
-                            <p>Armor Class {char.armor_class}</p>
-                            <p>Initiative {char.initiative}</p>
-                            <p>Speed {char.speed}</p>
-                        </div>
-                        <p>Hit Point Maximun  {char.current_hit_point_max}</p>
-                        <p>Current Hit Points  {char.current_hit_points}</p>
-                        <p>Temporary Hit Points  {char.temporary_hit_points}</p>
-                        <div>
-                            <p>Hit Dice  {char.hit_dice}</p>
-                            <div>
-                                <p>Successes {char.sucess_1} {char.sucess_2} {char.sucess_3}</p>
-                                <p>Failures {char.failures_1} {char.failures_2} {char.failures_3}</p>
-                            </div>
-                        </div>
+                        {/* this is the conditional render for armor class up to attacks (not including) */}
+                        {(this.state.armorToggle) ?
+                            <>
+                                <button onClick={this.saveArmor}>save</button>
+                                <button onClick={this.armorToggle}>cancel</button>
+                                <div>
+                                    <p>Armor Class <input name='armor_class' value={this.state.armor_class} onChange={this.handleChange} /></p>
+                                    <p>Initiative <input name='initiative' value={this.state.initiative} onChange={this.handleChange} /></p>
+                                    <p>Speed <input name='speed' value={this.state.speed} onChange={this.handleChange} /></p>
+                                </div>
+                                <p>Hit Point Maximun  <input name='hit_point_max' value={this.state.hit_point_max} onChange={this.handleChange} /></p>
+                                <p>Current Hit Points  <input name='current_hit_points' value={this.state.current_hit_points} onChange={this.handleChange} /></p>
+                                <p>Temporary Hit Points  <input name='temporary_hit_points' value={this.state.temporary_hit_points} onChange={this.handleChange} /></p>
+                                <div>
+                                    <p>Hit Dice  <input name='hit_dice' value={this.state.hit_dice} onChange={this.handleChange} /></p>
+                                    <div>
+                                        <p>Successes
+                                            <input type='checkbox' name='success_1' value={this.state.success_1}
+                                                onClick={e => this.checkboxToggler(e)} />
+                                            <input type='checkbox' name='success_2' value={this.state.success_2}
+                                                onClick={e => this.checkboxToggler(e)} />
+                                            <input type='checkbox' name='success_3' value={this.state.success_3}
+                                                onClick={e => this.checkboxToggler(e)} />
+                                        </p>
+                                        <p>Failures
+                                            <input type='checkbox' name='failures_1' value={this.state.failures_1}
+                                                onClick={e => this.checkboxToggler(e)} />
+                                            <input type='checkbox' name='failures_2' value={this.state.failures_2}
+                                                onClick={e => this.checkboxToggler(e)} />
+                                            <input type='checkbox' name='failures_3' value={this.state.failures_3}
+                                                onClick={e => this.checkboxToggler(e)} />
+                                        </p>
+                                    </div>
+                                </div>
+                            </>
+                            :
+                            <>
+                                <button onClick={this.armorToggle}>edit</button>
+                                <div>
+                                    <p>Armor Class {this.state.armor_class}</p>
+                                    <p>Initiative {this.state.initiative}</p>
+                                    <p>Speed {this.state.speed}</p>
+                                </div>
+                                <p>Hit Point Maximun  {this.state.current_hit_point_max}</p>
+                                <p>Current Hit Points  {this.state.current_hit_points}</p>
+                                <p>Temporary Hit Points  {this.state.temporary_hit_points}</p>
+                                <div>
+                                    <p>Hit Dice  {this.state.hit_dice}</p>
+                                    <div>
+                                        <p>Successes {this.state.sucess_1} {this.state.sucess_2} {this.state.sucess_3}</p>
+                                        <p>Failures {this.state.failures_1} {this.state.failures_2} {this.state.failures_3}</p>
+                                    </div>
+                                </div>
+                            </>
+                        }
                         <div>
                             Attacks & Spellcasting
                             {attacks.map((atk) => {

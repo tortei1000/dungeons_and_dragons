@@ -48,3 +48,5 @@ app.post('/api/features', Chars_ctrl.getOneFeatures)
 
 app.post('/api/charsInfo', Edit_ctrl.editCharInfo)
 app.post('/api/attributes', Edit_ctrl.saveAtt)
+app.post('/api/skills', Edit_ctrl.saveSkills)
+app.post('/api/armor', Edit_ctrl.saveArmor)
