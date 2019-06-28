@@ -119,13 +119,13 @@ class CharacterCard extends Component {
 
 
   render() {
-    console.log(this.state.chars)
+    
 
-    let charsArr = this.state.chars.map((char, index) => {
+    let charsArr = this.state.chars.map((char) => {
       return (
         <>
 
-          <option key={index} value={char.char_name}>{char.char_name}</option>
+          <option key={char.char_name} value={char.char_name}>{char.char_name}</option>
 
         </>
       )

@@ -53,4 +53,18 @@ module.exports = {
 
   },
 
+  deleteAttacks: async (req,res) => {
+    console.log(`delete attacks fired`, req.params, req.session.user, req.body)
+    const db = req.app.get('db')
+
+    let {name} = req.params
+    let {id} = req.session.user
+    let {char_name} = req.body
+
+    let newAttacks = await db.delete_attacks([name, id, char_name])
+
+    res.send(newAttacks)
+
+  }
+
 }
