@@ -57,14 +57,26 @@ module.exports = {
     console.log(`delete attacks fired`, req.params, req.session.user, req.body)
     const db = req.app.get('db')
 
-    let {name} = req.params
-    let {id} = req.session.user
+    let {id} = req.params
+    let {id : user} = req.session.user
     let {char_name} = req.body
 
-    let newAttacks = await db.delete_attacks([name, id, char_name])
+    let newAttacks = await db.delete_attacks([id, user, char_name])
 
     res.send(newAttacks)
 
-  }
+  },
+
+  createAttack: async (req, res) => {
+    console.log(`create attack fired`, req.body)
+    const db = req.app.get('db')
+
+    let { id, atk_name, atk_bonus, atk_damage, atk_type} = req.body
+
+    await db.new_attack([id, atk_name, atk_bonus, atk_damage, atk_type])
+
+    res.sendStatus(200)
+
+  },
 
 }

@@ -7,7 +7,9 @@ import { async } from 'q';
 export default class SingleChar extends Component {
     state = {
         char: [],
+        id : null,
         attackToggle: false,
+        createAttToggle: false,
         armorToggle: false,
         languages: [],
         proficiencies: [],
@@ -97,6 +99,7 @@ export default class SingleChar extends Component {
         await axios.post(`/api/character/`, { char_name }).then(res => {
             this.setState({
                 char: res.data,
+                id : res.data.id,
                 str: res.data.str,
                 dex: res.data.dex,
                 con: res.data.con,
@@ -246,6 +249,7 @@ export default class SingleChar extends Component {
 
     }
 
+
     //this is for the check boxes on sucess and failures
     checkboxToggler = (e) => {
 
@@ -299,17 +303,26 @@ export default class SingleChar extends Component {
     }
 
     //delete from DB function
-    deleteThis = (e) => {
-        console.log(e.target)
-        let { name } = e.target
+    deleteThis = (item) => {
+        
+        let { id } = item
         let { char_name } = this.state
 
-        axios.put(`/api/attacks/${name}`, { char_name }).then(res => {
+        axios.put(`/api/attacks/${id}`, { char_name }).then(res => {
             this.setState({
                 attacks: res.data
             })
         })
         this.loadAllThings()
+    }
+
+    newAttack = async() => {
+        let {id, atk_name, atk_bonus, atk_damage, atk_type } = this.state
+        await axios.post('/api/newattacks', {id, atk_name, atk_bonus, atk_damage, atk_type})
+        this.loadAllThings()
+        this.setState({
+            createAttToggle : false
+        })
     }
 
 
@@ -543,25 +556,46 @@ export default class SingleChar extends Component {
                             </>
                         }
                         {(this.state.attackToggle) ?
-                            <div>
-                                <button name="attackToggle" value={this.state.attackToggle} onClick={this.armorToggle}>cancel</button>
+                            <div className="attack_container">
+                                <button name="createAttToggle" value={this.state.createAttToggle} onClick={this.armorToggle}>create</button>
+                                <button name="attackToggle" value={this.state.attackToggle}
+                                    onClick={() => this.setState({ attackToggle: false, createAttToggle: false })}>cancel</button>
                                 <p>Attacks & Spellcasting</p>
-                                {attacks.map((atk) => {
-                                    return <div key={atk.name} name={atk.name}>
-                                        <button name={atk.name} onClick={this.deleteThis}>X</button>
-                                        <p>{atk.name}</p>
-                                        <p>{atk.atk_bonus}</p>
-                                        <p>{atk.damage}</p>
-                                        <p>{atk.type}</p>
+                                {(this.state.createAttToggle ) ?
+                                    <div> 
+                                        name: <input name='atk_name' onChange={this.handleChange}/>
+                                        atk bonus: <input name='atk_bonus' onChange={this.handleChange}/>
+                                        atk damage: <input name='atk_damage' onChange={this.handleChange}/>
+                                        atk type: <input name='atk_type' onChange={this.handleChange}/>
+                                        <button onClick={this.newAttack}>save new</button>
                                     </div>
-                                })}
+
+                                    :
+                                    <div>
+                                        {attacks.map((atk) => {
+                                            return <div className="ind_att_container" key={atk.name} name={atk.name}>
+                                                <button name={atk.name} onClick={() => this.deleteThis(atk)}>X</button>
+                                                <p>{atk.name}</p>
+                                                <p>{atk.atk_bonus}</p>
+                                                <p>{atk.damage}</p>
+                                                <p>{atk.type}</p>
+                                            </div>
+                                        })}
+                                    </div>
+
+                                }
+
+
+
                             </div>
+
                             :
-                            <div>
+                            <div className="attack_container">
                                 <button name="attackToggle" value={this.state.attackToggle} onClick={this.armorToggle}>edit</button>
+
                                 <p>Attacks & Spellcasting</p>
                                 {attacks.map((atk) => {
-                                    return <div key={atk.name}>
+                                    return <div className="ind_att_container" key={atk.name}>
                                         <p>{atk.name}</p>
                                         <p>{atk.atk_bonus}</p>
                                         <p>{atk.damage}</p>
