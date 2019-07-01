@@ -7,9 +7,12 @@ import { async } from 'q';
 export default class SingleChar extends Component {
     state = {
         char: [],
-        id : null,
+        id: null,
+        createProfToggle: false,
         attackToggle: false,
         createAttToggle: false,
+        perceptionToggle: false,
+        profToggle: false,
         armorToggle: false,
         languages: [],
         proficiencies: [],
@@ -99,7 +102,7 @@ export default class SingleChar extends Component {
         await axios.post(`/api/character/`, { char_name }).then(res => {
             this.setState({
                 char: res.data,
-                id : res.data.id,
+                id: res.data.id,
                 str: res.data.str,
                 dex: res.data.dex,
                 con: res.data.con,
@@ -304,7 +307,7 @@ export default class SingleChar extends Component {
 
     //delete from DB function
     deleteThis = (item) => {
-        
+
         let { id } = item
         let { char_name } = this.state
 
@@ -316,13 +319,40 @@ export default class SingleChar extends Component {
         this.loadAllThings()
     }
 
-    newAttack = async() => {
-        let {id, atk_name, atk_bonus, atk_damage, atk_type } = this.state
-        await axios.post('/api/newattacks', {id, atk_name, atk_bonus, atk_damage, atk_type})
+    deleteProf = (item) => {
+        let { id } = item
+        let { char_name } = this.state
+
+        axios.put(`/api/prof/${id}`, { char_name }).then(res => {
+            this.setState({
+                attacks: res.data
+            })
+        })
+        this.loadAllThings()
+    }
+
+    newAttack = async () => {
+        let { id, atk_name, atk_bonus, atk_damage, atk_type } = this.state
+        await axios.post('/api/newattacks', { id, atk_name, atk_bonus, atk_damage, atk_type })
         this.loadAllThings()
         this.setState({
-            createAttToggle : false
+            createAttToggle: false
         })
+    }
+
+    newProf = async () => {
+        let { id, prof_name } = this.state
+        await axios.post('/api/profi', { id, prof_name })
+        this.loadAllThings()
+        this.setState({
+            createProfToggle: false
+        })
+    }
+
+    savePerception = async () => {
+        let { char_name, passive_perception } = this.state
+        await axios.post('/api/perception', { char_name, passive_perception })
+        this.setState({ perceptionToggle: false })
     }
 
 
@@ -555,18 +585,19 @@ export default class SingleChar extends Component {
                                 </div>
                             </>
                         }
+                        {/* this is the toggle for the attack section, there is a double toggle... one to edit and inside that one to create */}
                         {(this.state.attackToggle) ?
                             <div className="attack_container">
                                 <button name="createAttToggle" value={this.state.createAttToggle} onClick={this.armorToggle}>create</button>
                                 <button name="attackToggle" value={this.state.attackToggle}
                                     onClick={() => this.setState({ attackToggle: false, createAttToggle: false })}>cancel</button>
                                 <p>Attacks & Spellcasting</p>
-                                {(this.state.createAttToggle ) ?
-                                    <div> 
-                                        name: <input name='atk_name' onChange={this.handleChange}/>
-                                        atk bonus: <input name='atk_bonus' onChange={this.handleChange}/>
-                                        atk damage: <input name='atk_damage' onChange={this.handleChange}/>
-                                        atk type: <input name='atk_type' onChange={this.handleChange}/>
+                                {(this.state.createAttToggle) ?
+                                    <div>
+                                        name: <input name='atk_name' onChange={this.handleChange} />
+                                        atk bonus: <input name='atk_bonus' onChange={this.handleChange} />
+                                        atk damage: <input name='atk_damage' onChange={this.handleChange} />
+                                        atk type: <input name='atk_type' onChange={this.handleChange} />
                                         <button onClick={this.newAttack}>save new</button>
                                     </div>
 
@@ -582,13 +613,8 @@ export default class SingleChar extends Component {
                                             </div>
                                         })}
                                     </div>
-
                                 }
-
-
-
                             </div>
-
                             :
                             <div className="attack_container">
                                 <button name="attackToggle" value={this.state.attackToggle} onClick={this.armorToggle}>edit</button>
@@ -606,20 +632,85 @@ export default class SingleChar extends Component {
                         }
                     </div>
                 </section>
+
                 <div>
-                    {char.passive_perception}Passive Wisdom (Perception)
-                    <div>Other Proficiencies & Languages:
-                        <div>Languages:
-                            {languages.map((lag) => {
-                        return <p key={lag.name}>{lag.name}</p>
-                    })}
+                    {/* passive perception toggle just like attributes */}
+                    {(this.state.perceptionToggle) ?
+                        <>
+                            <button onClick={this.savePerception}>save</button>
+                            <button name="perceptionToggle" value={this.state.perceptionToggle} onClick={this.armorToggle}>cancel</button>
+                            <div>{this.state.passive_perception} Passive Wisdom (Perception)
+                                <button value='this.state.passive_perception' name="passive_perception"
+                                    onClick={e => this.strAdd(e)}>+</button>
+                                <button value='this.state.passive_perception' name="passive_perception"
+                                    onClick={this.strSub}>-</button>
+                            </div>
+                        </>
+                        :
+                        <>
+                            <button name="perceptionToggle" value={this.state.perceptionToggle} onClick={this.armorToggle}>edit</button>
+                            {this.state.passive_perception} Passive Wisdom (Perception)
+                        </>
+                    }
+
+                    {(this.state.profToggle ?
+                        <div>
+                            <button name="createProfToggle" value={this.state.createProfToggle} onClick={this.armorToggle}>create</button>
+                            <button name="profToggle" value={this.state.profToggle}
+                                onClick={() => this.setState({ profToggle: false, createProfToggle: false })}>cancel</button>
+                            <div>Other Proficiencies & Languages:
+                                {(this.state.createProfToggle ? 
+                                <div>
+                                    name: <input name='prof_name' onChange={this.handleChange} />
+                                    <button onClick={this.newProf}>save new</button>
+                                </div>
+
+                                :
+
+                                <div>Languages:
+                                    
+                                </div>
+                                )}
+                                <div>
+                                    {languages.map((lag) => {
+                                return (
+                                    <div>
+                                        <button name={lag.name} onClick={() => this.deleteThis(lag)}>X</button>
+                                        <p key={lag.name}>{lag.name}</p>
+                                    </div>
+                                )
+                            })}
+                                </div>
+                                <div>Proficiencies:
+                                    {proficiencies.map((prof) => {
+                                    return (
+                                        <div>
+                                            <button name={prof.name} onClick={() => this.deleteProf(prof)}>X</button>
+                                            <p key={prof.name}>{prof.name}</p>
+                                        </div>
+                                    )
+                                })}
+                                </div>
+                            </div>
                         </div>
-                        <div>Proficiencies:
-                            {proficiencies.map((prof) => {
-                            return <div key={prof.name}>{prof.name}</div>
-                        })}
+                        :
+                        <div>
+                            <button name="profToggle" value={this.state.profToggle} onClick={this.armorToggle} >edit</button>
+                            <div>Other Proficiencies & Languages:
+                                <div>Languages:
+                                {languages.map((lag) => {
+                                return <p key={lag.name}>{lag.name}</p>
+                            })}
+                                </div>
+                                <div>Proficiencies:
+                                {proficiencies.map((prof) => {
+                                    return <div key={prof.name}>{prof.name}</div>
+                                })}
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    )}
+
                 </div>
 
                 <div>

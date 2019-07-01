@@ -64,7 +64,7 @@ module.exports = {
   },
 
   getOneAttacks: async (req,res) => {
-    console.log(`getOneAttacks fired`, req.body)
+    
     const db = req.app.get('db')
     let { id } = req.session.user
     let {char_name} = req.body
@@ -75,7 +75,7 @@ module.exports = {
         
   },
   getOneDPack: async (req,res) => {
-    console.log(`getOneDPack fired`, req.body)
+    
     const db = req.app.get('db')
     let { id } = req.session.user
     let {char_name} = req.body
@@ -86,7 +86,7 @@ module.exports = {
         
   },
   getOneOutlander: async (req,res) => {
-    console.log(`getOneOutlander fired`, req.body)
+    
     const db = req.app.get('db')
     let { id } = req.session.user
     let {char_name} = req.body
@@ -97,7 +97,7 @@ module.exports = {
         
   },
   getOneFeatures: async (req,res) => {
-    console.log(`getOneFeatures fired`, req.body)
+    
     const db = req.app.get('db')
     let { id } = req.session.user
     let {char_name} = req.body

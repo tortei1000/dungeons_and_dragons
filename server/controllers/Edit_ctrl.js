@@ -1,6 +1,6 @@
 module.exports = {
   editCharInfo: async (req, res) => {
-    console.log(`editCharInfo fired`, req.body)
+    
     const db = req.app.get('db')
 
     let { char_name, char_class, char_level, background, player_name, race, alignment, experience_points } = req.body
@@ -12,7 +12,7 @@ module.exports = {
   },
 
   saveAtt: async (req, res) => {
-    console.log(`saveAtt fired`, req.body)
+    
     const db = req.app.get('db')
 
     let { char_name, str, dex, con, cha, intel, wis } = req.body
@@ -24,7 +24,7 @@ module.exports = {
   },
 
   saveSkills: async (req, res) => {
-    console.log(`saveSkills fired`, req.body)
+    
     const db = req.app.get('db')
 
     let { char_name, inspiration, proficiency_bonus, sav_str, sav_dex, sav_con, sav_int, sav_wis, sav_cha, acrobatics, animal_handling, arcana, athletics,
@@ -40,7 +40,7 @@ module.exports = {
   },
 
   saveArmor: async (req, res) => {
-    console.log(`saveArmor fired`, req.body)
+    
     const db = req.app.get('db')
 
     let { char_name, armor_class, initiative, speed, hit_point_max, current_hit_points, temporary_hit_points, hit_dice,
@@ -54,7 +54,7 @@ module.exports = {
   },
 
   deleteAttacks: async (req,res) => {
-    console.log(`delete attacks fired`, req.params, req.session.user, req.body)
+    
     const db = req.app.get('db')
 
     let {id} = req.params
@@ -68,7 +68,7 @@ module.exports = {
   },
 
   createAttack: async (req, res) => {
-    console.log(`create attack fired`, req.body)
+    
     const db = req.app.get('db')
 
     let { id, atk_name, atk_bonus, atk_damage, atk_type} = req.body
@@ -77,6 +77,44 @@ module.exports = {
 
     res.sendStatus(200)
 
+  },
+
+  savePerception: async (req, res) => {
+    
+    const db = req.app.get('db')
+
+    let { char_name, passive_perception } = req.body
+
+    let newPerc = await db.save_perception([char_name, passive_perception])
+
+    res.send(newPerc)
+
+  },
+
+  deleteProf: async (req,res) => {
+    console.log(`delete prof fired`, req.params, req.session.user, req.body)
+    const db = req.app.get('db')
+
+    let {id} = req.params
+    let {id : user} = req.session.user
+    let {char_name} = req.body
+
+    let newProf = await db.delete_prof([id, user, char_name])
+
+    res.send(newProf)
+
+  },
+  createProf: async (req, res) => {
+    console.log(`create prof fired`, req.body)
+    const db = req.app.get('db')
+
+    let { id, prof_name } = req.body
+
+    await db.new_prof([id, prof_name])
+
+    res.sendStatus(200)
+
+    
   },
 
 }
