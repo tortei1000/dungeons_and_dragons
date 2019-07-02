@@ -8,7 +8,10 @@ export default class SingleChar extends Component {
     state = {
         char: [],
         id: null,
+        traits: false,
         createProfToggle: false,
+        gearToggle: false,
+        createGearToggle: false,
         attackToggle: false,
         createAttToggle: false,
         perceptionToggle: false,
@@ -276,6 +279,15 @@ export default class SingleChar extends Component {
         window.location.reload()
 
     }
+
+    traitSave = async (char_name) => {
+        let { personality_trait, ideal, bond, flaw } = this.state
+
+        await axios.post('/api/traits', { char_name, personality_trait, ideal, bond, flaw })
+        this.setState({traits : false})
+        window.location.reload()
+
+    }
     //this saves att to DB
     saveAtt = async () => {
         let { char_name, str, dex, con, cha, intel, wis } = this.state
@@ -331,6 +343,42 @@ export default class SingleChar extends Component {
         this.loadAllThings()
     }
 
+    deleteLag = (item) => {
+        let { id } = item
+        let { char_name } = this.state
+
+        axios.put(`/api/lag/${id}`, { char_name }).then(res => {
+            this.setState({
+                attacks: res.data
+            })
+        })
+        this.loadAllThings()
+    }
+
+    deletePack = (item) => {
+        let { id } = item
+        let { char_name } = this.state
+
+        axios.put(`/api/pack/${id}`, { char_name }).then(res => {
+            this.setState({
+                attacks: res.data
+            })
+        })
+        this.loadAllThings()
+    }
+
+    deleteGear = (item) => {
+        let { id } = item
+        let { char_name } = this.state
+
+        axios.put(`/api/gear/${id}`, { char_name }).then(res => {
+            this.setState({
+                attacks: res.data
+            })
+        })
+        this.loadAllThings()
+    }
+
     newAttack = async () => {
         let { id, atk_name, atk_bonus, atk_damage, atk_type } = this.state
         await axios.post('/api/newattacks', { id, atk_name, atk_bonus, atk_damage, atk_type })
@@ -346,6 +394,33 @@ export default class SingleChar extends Component {
         this.loadAllThings()
         this.setState({
             createProfToggle: false
+        })
+    }
+
+    newLang = async () => {
+        let { id, lang_name } = this.state
+        await axios.post('/api/lang', { id, lang_name })
+        this.loadAllThings()
+        this.setState({
+            createProfToggle: false
+        })
+    }
+
+    newDung = async () => {
+        let { id, dung_name, dung_qty } = this.state
+        await axios.post('/api/dung', { id, dung_name, dung_qty })
+        this.loadAllThings()
+        this.setState({
+            createGearToggle: false
+        })
+    }
+
+    newOut = async () => {
+        let { id, out_name, out_qty } = this.state
+        await axios.post('/api/out', { id, out_name, out_qty })
+        this.loadAllThings()
+        this.setState({
+            createGearToggle: false
         })
     }
 
@@ -661,8 +736,10 @@ export default class SingleChar extends Component {
                             <div>Other Proficiencies & Languages:
                                 {(this.state.createProfToggle ? 
                                 <div>
-                                    name: <input name='prof_name' onChange={this.handleChange} />
+                                    new Proficiency: <input name='prof_name' onChange={this.handleChange} />
                                     <button onClick={this.newProf}>save new</button>
+                                    new Language: <input name='lang_name' onChange={this.handleChange} />
+                                    <button onClick={this.newLang}>save new</button>
                                 </div>
 
                                 :
@@ -675,7 +752,7 @@ export default class SingleChar extends Component {
                                     {languages.map((lag) => {
                                 return (
                                     <div>
-                                        <button name={lag.name} onClick={() => this.deleteThis(lag)}>X</button>
+                                        <button name={lag.name} onClick={() => this.deleteLag(lag)}>X</button>
                                         <p key={lag.name}>{lag.name}</p>
                                     </div>
                                 )
@@ -685,8 +762,10 @@ export default class SingleChar extends Component {
                                     {proficiencies.map((prof) => {
                                     return (
                                         <div>
-                                            <button name={prof.name} onClick={() => this.deleteProf(prof)}>X</button>
-                                            <p key={prof.name}>{prof.name}</p>
+                                            
+                                            <p key={prof.name}>{prof.name} 
+                                                <button name={prof.name} onClick={() => this.deleteProf(prof)}>X</button>
+                                            </p>
                                         </div>
                                     )
                                 })}
@@ -715,27 +794,88 @@ export default class SingleChar extends Component {
 
                 <div>
                     Equipament
+                    {(this.state.gearToggle) ? 
+                    <div className="attack_container">
+                        <button name="createGearToggle" value={this.state.createGearToggle} onClick={this.armorToggle}>create</button>
+                        <button name="gearToggle" value={this.state.gearToggle}
+                            onClick={() => this.setState({ gearToggle: false, createGearToggle: false })}>cancel</button>
+                        {(this.state.createGearToggle)?
+                        <div>
+                            new Dungeoneer item: <input name='dung_name' onChange={this.handleChange} />
+                            quantity: <input name='dung_qty' onChange={this.handleChange} />
+                            <button onClick={this.newDung}>save new</button>
+                            new Outlander item: <input name='out_name' onChange={this.handleChange} />
+                            quantity: <input name='out_qty' onChange={this.handleChange} />
+                            <button onClick={this.newOut}>save new</button>
+                        </div>
+
+                        :
+                        <div className="attack_container">
+                            <p>Dungeoneer Pack:</p>
+                            {dungeoneerPack.map((pack) => {
+                            return <div key={pack.name}>
+                            <p>{pack.name}</p>
+                            <p>{pack.quantity}</p>
+                            <button name={pack.name} onClick={() => this.deletePack(pack)}>X</button>
+                            </div>
+                            })}
+
+                            <p>Outlander Gear:</p>
+                            {outlanderGear.map((gear) => {
+                            return <div key={gear.name}>
+                            <p>{gear.name}</p>
+                            <p>{gear.quantity}</p>
+                            <button name={gear.name} onClick={() => this.deleteGear(gear)}>X</button>
+                            </div>
+                            })}
+
+                        </div>
+                        }
+                        
+                        
+                    </div>
+                    :
+                    <div className="attack_container">
+                    <button name="gearToggle" value={this.state.gearToggle} onClick={this.armorToggle} >edit</button>
                     {dungeoneerPack.map((pack) => {
                         return <div key={pack.name}>
                             <p>{pack.name}</p>
                             <p>{pack.quantity}</p>
                         </div>
                     })}
-
                     {outlanderGear.map((gear) => {
                         return <div key={gear.name}>
                             <p>{gear.name}</p>
                             <p>{gear.quantity}</p>
                         </div>
                     })}
+                    </div>
+                    }
+                    
+
+                    
                 </div>
-                <div>
+                <div className="trait_container">
+                    {(this.state.traits) ? 
                     <div>
+                      Personality Trait:  <input name='personality_trait' value={this.state.personality_trait} onChange={this.handleChange} />
+                      Ideal:  <input name='ideal' value={this.state.ideal} onChange={this.handleChange} />
+                      Bond:  <input name='bond' value={this.state.bond} onChange={this.handleChange} />
+                      Flaw:  <input name='flaw' value={this.state.flaw} onChange={this.handleChange} />
+                        <button onClick={() => this.traitSave(char.char_name)}>save</button>
+                        <button name="traits" value={this.state.traits} onClick={this.armorToggle}>cancel</button>
+                    </div>
+                    :
+                    <div>
+                        <button name="traits" value={this.state.traits} onClick={this.armorToggle}>edit</button>
                         <p>Personality Trait  {this.state.personality_trait}</p>
                         <p>Ideal {this.state.ideal}</p>
                         <p>Bond {this.state.bond}</p>
                         <p>Flaw  {this.state.flaw}</p>
+                        
                     </div>
+                    }
+                    
                     <div>
                         Features & Traits
 

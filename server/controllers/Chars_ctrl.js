@@ -1,10 +1,10 @@
 module.exports = {
   getAll: (req, res) => {
-    console.log(`getAll fired`)
+    
     const db = req.app.get('db')
     let { id } = req.session.user
     // id = String(id)
-    console.log(id, 'here is id')
+    
     // if (req.query.title) {
     //   let searchTerm = `%${req.query.title}%`
     //   console.log('here is req', searchTerm)
@@ -31,7 +31,7 @@ module.exports = {
   },
 
   getOne: async (req,res) => {
-    console.log(`getOne fired`, req.body)
+    
     const db = req.app.get('db')
     let { id } = req.session.user
     let {char_name} = req.body
@@ -41,7 +41,7 @@ module.exports = {
     
   },
   getOneLang: async (req,res) => {
-    console.log(`getOneLang fired`, req.body)
+    
     const db = req.app.get('db')
     let { id } = req.session.user
     let {char_name} = req.body

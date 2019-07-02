@@ -36,10 +36,15 @@
   display: flex;
   border: solid;
   flex-direction: column;
+  width: 300px;
 }
 
 .ind_att_container{
   display: flex;
   flex-wrap: wrap;
   width: 300px;
+}
+
+.trait_container {
+  width: 500px;
 }

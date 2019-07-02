@@ -92,7 +92,7 @@ module.exports = {
   },
 
   deleteProf: async (req,res) => {
-    console.log(`delete prof fired`, req.params, req.session.user, req.body)
+    
     const db = req.app.get('db')
 
     let {id} = req.params
@@ -105,7 +105,7 @@ module.exports = {
 
   },
   createProf: async (req, res) => {
-    console.log(`create prof fired`, req.body)
+    
     const db = req.app.get('db')
 
     let { id, prof_name } = req.body
@@ -114,7 +114,101 @@ module.exports = {
 
     res.sendStatus(200)
 
+
+  },
+
+  createLang: async (req, res) => {
+    
+    const db = req.app.get('db')
+
+    let { id, lang_name } = req.body
+
+    await db.new_lang([id, lang_name])
+
+    res.sendStatus(200)
+
     
   },
+
+  deleteLang: async (req,res) => {
+    console.log(`delete lang fired`, req.params, req.session.user, req.body)
+    const db = req.app.get('db')
+
+    let {id} = req.params
+    let {id : user} = req.session.user
+    let {char_name} = req.body
+
+    let newProf = await db.delete_lang([id, user, char_name])
+
+    res.send(newProf)
+
+  },
+
+  deletePack: async (req,res) => {
+    console.log(`delete pack fired`, req.params, req.session.user, req.body)
+    const db = req.app.get('db')
+
+    let {id} = req.params
+    let {id : user} = req.session.user
+    let {char_name} = req.body
+
+    let newProf = await db.delete_pack([id, user, char_name])
+
+    res.send(newProf)
+
+  },
+
+  deleteGear: async (req,res) => {
+    console.log(`delete gear fired`, req.params, req.session.user, req.body)
+    const db = req.app.get('db')
+
+    let {id} = req.params
+    let {id : user} = req.session.user
+    let {char_name} = req.body
+
+    let newProf = await db.delete_gear([id, user, char_name])
+
+    res.send(newProf)
+
+  },
+
+  createDung: async (req, res) => {
+    
+    const db = req.app.get('db')
+
+    let { id, dung_name, dung_qty } = req.body
+
+    await db.create_dung([id, dung_name, dung_qty])
+
+    res.sendStatus(200)
+
+    
+  },
+
+  createOut: async (req, res) => {
+    
+    const db = req.app.get('db')
+
+    let { id, out_name, out_qty } = req.body
+
+    await db.create_out([id, out_name, out_qty])
+
+    res.sendStatus(200)
+
+    
+  },
+
+  editTraits: async (req, res) => {
+    
+    const db = req.app.get('db')
+
+    let { char_name, personality_trait, ideal, bond, flaw } = req.body
+
+    let editTraits = await db.edit_traits([char_name, personality_trait, ideal, bond, flaw])
+
+    res.send(editTraits)
+
+  },
+
 
 }

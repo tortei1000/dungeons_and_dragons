@@ -29,7 +29,7 @@ module.exports = {
 
     foundUser = await db.get_user(loginUsername)
     user = foundUser[0]
-    console.log(req.body)
+   
     
     if(!user){
       return res.status(401).send(`username not found`)
@@ -47,11 +47,11 @@ module.exports = {
   },
   logout : (req, res) =>{ 
     req.session.destroy()
-    console.log(`logout fired`)
+    
     res.sendStatus(200)
   },
   getUsers: (req, res) => {
-    console.log(`getUsers was fired`)
+    
     if(!req.session.user){res.sendStatus(403)}
     else{
       res.status(200).send(req.session.user)
