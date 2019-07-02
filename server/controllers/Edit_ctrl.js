@@ -131,7 +131,7 @@ module.exports = {
   },
 
   deleteLang: async (req,res) => {
-    console.log(`delete lang fired`, req.params, req.session.user, req.body)
+    
     const db = req.app.get('db')
 
     let {id} = req.params
@@ -145,7 +145,7 @@ module.exports = {
   },
 
   deletePack: async (req,res) => {
-    console.log(`delete pack fired`, req.params, req.session.user, req.body)
+    
     const db = req.app.get('db')
 
     let {id} = req.params
@@ -159,7 +159,7 @@ module.exports = {
   },
 
   deleteGear: async (req,res) => {
-    console.log(`delete gear fired`, req.params, req.session.user, req.body)
+    
     const db = req.app.get('db')
 
     let {id} = req.params
@@ -208,6 +208,33 @@ module.exports = {
 
     res.send(editTraits)
 
+  },
+
+  deleteFeature: async (req,res) => {
+    console.log(`delete feature fired`, req.params, req.session.user, req.body)
+    const db = req.app.get('db')
+
+    let {id} = req.params
+    let {id : user} = req.session.user
+    let {char_name} = req.body
+
+    let newProf = await db.delete_feature([id, user, char_name])
+
+    res.send(newProf)
+
+  },
+
+  createFeature: async (req, res) => {
+    
+    const db = req.app.get('db')
+
+    let { id, feature_name, feature_desc, feature_uses } = req.body
+
+    await db.create_feature([id, feature_name, feature_desc, feature_uses])
+
+    res.sendStatus(200)
+
+    
   },
 
 

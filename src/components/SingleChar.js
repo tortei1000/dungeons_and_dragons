@@ -9,6 +9,8 @@ export default class SingleChar extends Component {
         char: [],
         id: null,
         traits: false,
+        featuresToggle: false,
+        createFeature: false,
         createProfToggle: false,
         gearToggle: false,
         createGearToggle: false,
@@ -379,6 +381,18 @@ export default class SingleChar extends Component {
         this.loadAllThings()
     }
 
+    deleteFeature = (item) => {
+        let { id } = item
+        let { char_name } = this.state
+
+        axios.put(`/api/feature/${id}`, { char_name }).then(res => {
+            this.setState({
+                attacks: res.data
+            })
+        })
+        this.loadAllThings()
+    }
+
     newAttack = async () => {
         let { id, atk_name, atk_bonus, atk_damage, atk_type } = this.state
         await axios.post('/api/newattacks', { id, atk_name, atk_bonus, atk_damage, atk_type })
@@ -421,6 +435,15 @@ export default class SingleChar extends Component {
         this.loadAllThings()
         this.setState({
             createGearToggle: false
+        })
+    }
+
+    newFeature = async () => {
+        let { id, feature_name, feature_desc, feature_uses } = this.state
+        await axios.post('/api/feature', { id, feature_name, feature_desc, feature_uses })
+        this.loadAllThings()
+        this.setState({
+            createFeature: false
         })
     }
 
@@ -878,7 +901,38 @@ export default class SingleChar extends Component {
                     
                     <div>
                         Features & Traits
+                        {(this.state.featuresToggle) ? 
+                        <div>
+                            <button name="createFeature" value={this.state.createFeature} onClick={this.armorToggle}>create</button>
+                            <button name="featuresToggle" value={this.state.featuresToggle}
+                            onClick={() => this.setState({ featuresToggle: false, createFeature: false })}>cancel</button>
+                            {(this.state.createFeature)?
+                                <div>
+                                    new Feature: <input name='feature_name' onChange={this.handleChange} />
+                                    description: <input name='feature_desc' onChange={this.handleChange} />
+                                    uses: <input name='feature_uses' onChange={this.handleChange} />
+                                    <button onClick={this.newFeature}>save new</button>
+                                </div>
 
+                                :
+                                <div>
+                                    {features.map((feature) => {
+                                    return <div key={feature.name}>
+                                    <p>{feature.name}</p>
+                                    <p>{feature.description}</p>
+                                    <p>{feature.uses}</p>
+                                    <button name={feature.name} onClick={() => this.deleteFeature(feature)}>X</button>
+                                    </div>
+                                    })}
+                                </div>
+                            }
+                                               
+                        </div>
+
+                        :
+
+                        <div>
+                        <button name="featuresToggle" value={this.state.featuresToggle} onClick={this.armorToggle} >edit</button>
                         {features.map((feature) => {
                             return <div key={feature.name}>
                                 <p>{feature.name}</p>
@@ -886,7 +940,11 @@ export default class SingleChar extends Component {
                                 <p>{feature.uses}</p>
                             </div>
                         })}
+                        </div>
+                        }
+                        
                     </div>
+                
                 </div>
             </div>
         )
