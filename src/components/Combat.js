@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 
 
 
-class CharacterCard extends Component {
+class Combat extends Component {
   constructor() {
     super()
     this.state = {
@@ -149,4 +149,4 @@ const mapStateToProps = (reduxState) => {
   return { username }
 }
 
-export default connect(mapStateToProps)(withRouter(CharacterCard))
+export default connect(mapStateToProps)(withRouter(Combat))

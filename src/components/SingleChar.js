@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import './singleChar.css'
-import { async } from 'q';
+import FooterNav from './FooterNav'
 
 
 export default class SingleChar extends Component {
@@ -277,7 +277,7 @@ export default class SingleChar extends Component {
         let { char_class, char_level, background, player_name, race, alignment, experience_points } = this.state
 
         await axios.post('/api/charsInfo', { char_name, char_class, char_level, background, player_name, race, alignment, experience_points })
-        this.editToggle()
+        this.setState({edit : false})
         window.location.reload()
 
     }
@@ -294,7 +294,7 @@ export default class SingleChar extends Component {
     saveAtt = async () => {
         let { char_name, str, dex, con, cha, intel, wis } = this.state
         await axios.post('/api/attributes', { char_name, str, dex, con, cha, intel, wis })
-        this.attToggle()
+        this.setState({attToggle : false})
     }
     //this saves the skills section to db
     saveSkills = async () => {
@@ -306,7 +306,7 @@ export default class SingleChar extends Component {
             deception, history, insight, intimidation, investigation, medicine, nature, perception, performance, persuation, religion, sleight_of_hand,
             stealth, survival
         })
-        this.skillsToggle()
+        this.setState({skillsToggle : false})
     }
     //this saves to db the armor section
     saveArmor = async () => {
@@ -316,7 +316,7 @@ export default class SingleChar extends Component {
             char_name, armor_class, initiative, speed, hit_point_max, current_hit_points, temporary_hit_points, hit_dice,
             success_1, success_2, success_3, failures_1, failures_2, failures_3
         })
-        this.armorToggle()
+        this.setState({armorToggle : false})
     }
 
     //delete from DB function
@@ -946,6 +946,7 @@ export default class SingleChar extends Component {
                     </div>
                 
                 </div>
+                <FooterNav />
             </div>
         )
     }
