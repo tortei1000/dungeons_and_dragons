@@ -1,0 +1,46 @@
+.combat_container{
+
+}
+
+.name_container{
+  font-size: 24px;
+  font-style: italic;
+  text-align: center;
+  margin-bottom: .25em;
+}
+.sub_container{
+  font-size: 20px;
+  
+  display: flex;
+  justify-content: space-around;
+  
+}
+
+.sav_container{
+  display: flex;
+  flex-direction: column;
+}
+
+.sav_sub_container{
+  font-size: 20px;
+  
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  
+}
+.sav_titles{
+  color: red;
+}
+
+.skill_sub_container{
+
+ 
+}
+.skill_titles{
+
+}
+.skill_container{
+  display: flex;
+  flex-direction: column;
+}
