@@ -5,25 +5,14 @@ import { connect } from 'react-redux'
 
 export default class Combat extends Component {
   
-  constructor() {
-    super()
-    this.state = {
-      chars: []
-    }
-  }
-
-  componentDidMount() {
-    axios.get(`/api/chars/`).then(res => {
-      this.setState({
-        chars: res.data
-      })
-    })
-  }
+   
   render(){
-    let {char_name} = this.state
+    
+    console.log(this.props.char_name)
     return(
       <div>
-        <Link to='/combat/:char_name' >COMBAT</Link>
+        <Link to={`/combat/${this.props.char_name}`} >COMBAT</Link>
+        <Link to={`/singlechar/${this.props.char_name}`} >Edit Char</Link>
       </div>
     )
   }

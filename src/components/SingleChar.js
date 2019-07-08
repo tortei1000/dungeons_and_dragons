@@ -946,7 +946,7 @@ export default class SingleChar extends Component {
                     </div>
                 
                 </div>
-                <FooterNav />
+                <FooterNav char_name = {this.state.char_name} />
             </div>
         )
     }

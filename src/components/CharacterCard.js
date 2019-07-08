@@ -88,6 +88,7 @@ class CharacterCard extends Component {
 
   componentDidMount() {
     axios.get(`/api/chars/`).then(res => {
+      console.log(res.data)
       this.setState({
         chars: res.data
       })
@@ -113,7 +114,7 @@ class CharacterCard extends Component {
   }
 
   handleCategories = ( event ) => {
-    
+    console.log(event.target.value)
     this.props.history.push(`/singlechar/${event.target.value}`)
   } 
 
@@ -124,9 +125,10 @@ class CharacterCard extends Component {
     let charsArr = this.state.chars.map((char) => {
       return (
         <>
-          
-          
-          <p key={char.char_name} value={char.char_name}>{char.char_name} - {char.char_class}</p>
+          <p>{char.char_name}</p>
+          <p>{char.char_class}</p>
+          <button key={char.char_name} value={char.char_name}>SELECT</button>
+         
         </>
       )
 
