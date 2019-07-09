@@ -1,50 +1,39 @@
-.single_char_container{
-  
-}
 
-.char_name_container{
-  font-size: 30px;
-  margin: 1em;
-}
-.name_info_container{
-  display: flex;
-  justify-content: space-between;
-}
-.char_info_container{
-  margin: 1em;
-  display: flex;
-  justify-content: space-between;
-  width: 600px;
-  flex-wrap: wrap;
+.bottom_nav{
   
-}
-
-.att_skills_armor_container{
   display: flex;
+  
+  height: 50px;
   justify-content: space-around;
+  
 }
-
-.att_container {
-  margin: 1em;
-}
-
-.skill_section_container{
-  margin: 1em;
-}
-
-.attack_container{
-  display: flex;
+.bottom_link{
   border: solid;
-  flex-direction: column;
-  width: 300px;
+  height: 45px;
+  margin: 1em;
+  background: yellow;
+  font-size: 20px;
+  
 }
 
-.ind_att_container{
-  display: flex;
-  flex-wrap: wrap;
-  width: 300px;
+.text_link{
+  text-decoration: none;
+  color: black;
+  text-align: center;
+}
+.button_char{
+  background: gray;
+  border-radius: 3px;
+  color: white;
+  padding: .5em;
+  font-size: 18px;
+}
+.button_char:hover{
+  background: white;
+  color: gray;
+
 }
 
-.trait_container {
-  width: 500px;
+.select_char_container{
+  border: solid;
 }

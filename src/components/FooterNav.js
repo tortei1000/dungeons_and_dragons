@@ -10,9 +10,9 @@ export default class Combat extends Component {
     
     console.log(this.props.char_name)
     return(
-      <div>
-        <Link to={`/combat/${this.props.char_name}`} >COMBAT</Link>
-        <Link to={`/singlechar/${this.props.char_name}`} >Edit Char</Link>
+      <div className='bottom_nav'>
+        <p className='bottom_link'><Link to={`/combat/${this.props.char_name}`} ><p className='text_link'>COMBAT</p></Link></p>
+        <p className='bottom_link'><Link to={`/singlechar/${this.props.char_name}`} ><p className='text_link'>Edit Char</p></Link></p>
       </div>
     )
   }

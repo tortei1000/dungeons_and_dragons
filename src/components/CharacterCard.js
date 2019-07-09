@@ -15,6 +15,7 @@ class CharacterCard extends Component {
       char_name: null,
       char_class: null,
       char_level: null,
+      party: null,
       race: null,
       background: null,
       alignment: null,
@@ -124,12 +125,13 @@ class CharacterCard extends Component {
 
     let charsArr = this.state.chars.map((char) => {
       return (
-        <>
-          <p>{char.char_name}</p>
-          <p>{char.char_class}</p>
-          <button key={char.char_name} value={char.char_name}>SELECT</button>
+        <div className='select_char_container'>
+          <p>character name:  {char.char_name}</p>
+          <p>class:  {char.char_class}</p>
+          <p>party:  {char.party}</p>
+          <button className='button_char' key={char.char_name} value={char.char_name}>SELECT</button>
          
-        </>
+        </div>
       )
 
     })
@@ -137,7 +139,7 @@ class CharacterCard extends Component {
       <>
         <p>choose your character:</p>
         
-        <div onClick={this.handleCategories}>{charsArr}</div>
+        <div  onClick={this.handleCategories}>{charsArr}</div>
         <p>or ...</p>
         <p>Create new character: </p><input placeholder='character name' name="char_name" onChange={this.handleChange} />
         <button onClick={this.newChar}>Create</button>

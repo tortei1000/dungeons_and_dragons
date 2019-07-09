@@ -237,24 +237,24 @@ export default class Combat extends Component {
           </div>
         </div>
         <div className="skill_container">Skills:
-          <p className='skill_sub_container'> {this.state.acrobatics} <p className='skill_titles'>Acrobatics (Dex)</p></p>
-          <p className='skill_sub_container'>{this.state.animal_handling} <p className='skill_titles'>Animal Handling (Wis)</p></p>
-          <p className='skill_sub_container'>{this.state.arcana} <p className='skill_titles'>arcana (Int)</p></p>
-          <p className='skill_sub_container'>{this.state.athletics} <p className='skill_titles'>athletics (Str)</p></p>
-          <p className='skill_sub_container'>{this.state.deception} <p className='skill_titles'>deception (Cha)</p></p>
-          <p className='skill_sub_container'>{this.state.history}<p className='skill_titles'> history (Int)</p></p>
-          <p className='skill_sub_container'>{this.state.insight} <p className='skill_titles'>insight (Wis)</p></p>
-          <p className='skill_sub_container'>{this.state.intimidation} <p className='skill_titles'>intimidation (Cha)</p></p>
-          <p className='skill_sub_container'>{this.state.investigation} <p className='skill_titles'>investigation (Int)</p></p>
-          <p className='skill_sub_container'>{this.state.medicine} <p className='skill_titles'>medicine (Wis)</p></p>
-          <p className='skill_sub_container'>{this.state.nature}<p className='skill_titles'> nature (Int)</p></p>
-          <p className='skill_sub_container'>{this.state.perception} <p className='skill_titles'>perception (Wis)</p></p>
-          <p className='skill_sub_container'>{this.state.performance}<p className='skill_titles'> performance (Cha)</p></p>
-          <p className='skill_sub_container'>{this.state.persuation}<p className='skill_titles'> persuation (Cha)</p></p>
-          <p className='skill_sub_container'>{this.state.religion} <p className='skill_titles'>religion (Int)</p></p>
-          <p className='skill_sub_container'>{this.state.sleight_of_hand} <p className='skill_titles'>sleight of hand (Dex)</p></p>
-          <p className='skill_sub_container'>{this.state.stealth} <p className='skill_titles'>stealth (Dex)</p></p>
-          <p className='skill_sub_container'>{this.state.survival} <p className='skill_titles'>survival (Wis)</p></p>
+          <p className='skill_sub_container'>{this.state.acrobatics} Acrobatics (Dex)</p>
+          <p className='skill_sub_container'>{this.state.animal_handling} Animal Handling (Wis)</p>
+          <p className='skill_sub_container'>{this.state.arcana} arcana (Int)</p>
+          <p className='skill_sub_container'>{this.state.athletics} athletics (Str)</p>
+          <p className='skill_sub_container'>{this.state.deception} deception (Cha)</p>
+          <p className='skill_sub_container'>{this.state.history} history (Int)</p>
+          <p className='skill_sub_container'>{this.state.insight} insight (Wis)</p>
+          <p className='skill_sub_container'>{this.state.intimidation} intimidation (Cha)</p>
+          <p className='skill_sub_container'>{this.state.investigation} investigation (Int)</p>
+          <p className='skill_sub_container'>{this.state.medicine} medicine (Wis)</p>
+          <p className='skill_sub_container'>{this.state.nature} nature (Int)</p>
+          <p className='skill_sub_container'>{this.state.perception} perception (Wis)</p>
+          <p className='skill_sub_container'>{this.state.performance} performance (Cha)</p>
+          <p className='skill_sub_container'>{this.state.persuation} persuation (Cha)</p>
+          <p className='skill_sub_container'>{this.state.religion} religion (Int)</p>
+          <p className='skill_sub_container'>{this.state.sleight_of_hand} sleight of hand (Dex)</p>
+          <p className='skill_sub_container'>{this.state.stealth} stealth (Dex)</p>
+          <p className='skill_sub_container'>{this.state.survival} survival (Wis)</p>
         </div>
         <FooterNav char_name={this.state.char_name} />
 
