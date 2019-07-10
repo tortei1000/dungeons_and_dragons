@@ -126,9 +126,9 @@ class CharacterCard extends Component {
     let charsArr = this.state.chars.map((char) => {
       return (
         <div className='select_char_container'>
-          <p>character name:  {char.char_name}</p>
-          <p>class:  {char.char_class}</p>
-          <p>party:  {char.party}</p>
+          <p className="char_name_container">character name:  {char.char_name}</p>
+          <p className="char_class_container">class:  {char.char_class}</p>
+          <p className="char_party_container">party:  {char.party}</p>
           <button className='button_char' key={char.char_name} value={char.char_name}>SELECT</button>
          
         </div>

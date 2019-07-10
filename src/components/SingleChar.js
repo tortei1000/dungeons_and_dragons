@@ -467,31 +467,31 @@ export default class SingleChar extends Component {
             <div className="single_char_container">
                 <button className='button_char' onClick={() => this.props.history.push('/home')}>change character</button>
                 <div className="name_info_container">
-                    <div className="char_name_container">CHARACTER NAME: {char.char_name}</div>
+                    <div className="name_container">CHARACTER NAME: {char.char_name}</div>
                     {/* this is the first conditional render, based on the state condition of edit */}
                     {(this.state.edit) ?
                         <div className="char_info_container" >
-                            <p>Class & Level: <input name='char_class' value={this.state.char_class} onChange={this.handleChange} />
+                            <p className="class_level">Class & Level: <input name='char_class' value={this.state.char_class} onChange={this.handleChange} />
                                 <input name='char_level' value={this.state.char_level} onChange={this.handleChange} /> </p>
-                            <p>Background: <input name='background' value={this.state.background} onChange={this.handleChange} /></p>
-                            <p>Player Name: <input name='player_name' value={this.state.player_name} onChange={this.handleChange} /></p>
-                            <p>Race: <input name='race' value={this.state.race} onChange={this.handleChange} /></p>
-                            <p>Alignment:<input name='alignment' value={this.state.alignment} onChange={this.handleChange} /> </p>
-                            <p>Experience Poins:<input name='experience_points' value={this.state.experience_points} onChange={this.handleChange} /> </p>
+                            <p className="background_info">Background: <input name='background' value={this.state.background} onChange={this.handleChange} /></p>
+                            <p className="player_name">Player Name: <input name='player_name' value={this.state.player_name} onChange={this.handleChange} /></p>
+                            <p className="race">Race: <input name='race' value={this.state.race} onChange={this.handleChange} /></p>
+                            <p className="alignment">Alignment:<input name='alignment' value={this.state.alignment} onChange={this.handleChange} /> </p>
+                            <p className="experience">Experience Poins:<input name='experience_points' value={this.state.experience_points} onChange={this.handleChange} /> </p>
                             <button className='button_char' onClick={() => this.charInfoSave(char.char_name)}>save</button>
                             <button className='button_char' name="edit" value={this.state.edit} onClick={this.armorToggle}>cancel</button>
                         </div>
                         :
                         <>
-                            <button className='button_char' name="edit" value={this.state.edit} onClick={this.armorToggle}>edit</button>
                             <div className="char_info_container">
-                                <p>Class & Level: {this.state.char_class} {this.state.char_level} </p>
-                                <p>Background: {this.state.background}</p>
-                                <p>Player Name: {this.state.player_name}</p>
-                                <p>Race: {this.state.race}</p>
-                                <p>Alignment: {this.state.alignment}</p>
-                                <p>Experience Poins: {this.state.experience_points}</p>
+                                <p id="class_level">Class & Level: {this.state.char_class} {this.state.char_level} </p>
+                                <p className="background_info">Background: {this.state.background}</p>
+                                <p className="player_name">Player Name: {this.state.player_name}</p>
+                                <p className="race">Race: {this.state.race}</p>
+                                <p className="alignment">Alignment: {this.state.alignment}</p>
+                                <p className="experience">Experience Poins: {this.state.experience_points}</p>
                             </div>
+                            <button className='button_char' name="edit" value={this.state.edit} onClick={this.armorToggle}>edit</button>
                         </>
                     }
                 </div>
