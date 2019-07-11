@@ -19,12 +19,12 @@ module.exports = {
   },
 
   newChar: (req, res) => {
-    console.log('newChar was fired')
-    let {char_name} = req.body
+    console.log('newChar was fired', req.body)
+    let {char_name, party} = req.body
     const db = req.app.get('db')
     let {id} = req.session.user
 
-    db.new_char([id, char_name]).then((char)=> {
+    db.new_char([id, char_name, party]).then((char)=> {
       res.status(200).send(char)
 
     }).catch(err=> console.log('error', err))
@@ -107,7 +107,25 @@ module.exports = {
     res.send(thisCharFeatures)
         
   },
+
+  delete: (req, res) => {
+    console.log(req.body)
+    
+    const db = req.app.get('db')
+
+    
+    let {id : user} = req.session.user
+    let {id} = req.body
+
+    db.delete_char([user, id]).then((chars)=> {
+      res.status(200).send(chars)
+
+    }).catch(err=> console.log('error', err))
+
+    
+  }
 }
+
 
   
 

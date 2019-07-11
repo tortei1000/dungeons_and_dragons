@@ -12,6 +12,7 @@ class CharacterCard extends Component {
     super()
     this.state = {
       chars: [],
+      party: null,
       char_name: null,
       char_class: null,
       char_level: null,
@@ -89,7 +90,7 @@ class CharacterCard extends Component {
 
   componentDidMount() {
     axios.get(`/api/chars/`).then(res => {
-      console.log(res.data)
+      
       this.setState({
         chars: res.data
       })
@@ -104,9 +105,9 @@ class CharacterCard extends Component {
   }
 
   newChar = () => {
-    const { char_name } = this.state
+    const { char_name, party } = this.state
 
-    axios.post(`/api/chars/`, { char_name }).then(res => {
+    axios.post(`/api/chars/`, { char_name, party }).then(res => {
       this.setState({
         chars: res.data
       })
@@ -119,6 +120,17 @@ class CharacterCard extends Component {
     this.props.history.push(`/singlechar/${event.target.value}`)
   } 
 
+  deleteChar = (id) =>{
+    
+
+    axios.post('/api/deletechar/', {id}).then(res=>{
+      this.setState({
+        chars: res.data
+      })
+    })
+    window.location.reload()
+  }
+
 
   render() {
     
@@ -130,7 +142,7 @@ class CharacterCard extends Component {
           <p className="char_class_container">class:  {char.char_class}</p>
           <p className="char_party_container">party:  {char.party}</p>
           <button className='button_char' key={char.char_name} value={char.char_name}>SELECT</button>
-         
+          <button onClick={()=>this.deleteChar(char.id)}>delete</button>
         </div>
       )
 
@@ -142,6 +154,7 @@ class CharacterCard extends Component {
         <div  onClick={this.handleCategories}>{charsArr}</div>
         <p>or ...</p>
         <p>Create new character: </p><input placeholder='character name' name="char_name" onChange={this.handleChange} />
+        <input placeholder='party name' name='party' onChange={this.handleChange} />
         <button onClick={this.newChar}>Create</button>
       </>
 

@@ -64,3 +64,5 @@ app.post(`/api/out/`, Edit_ctrl.createOut)
 app.post('/api/traits', Edit_ctrl.editTraits)
 app.put(`/api/feature/:id`, Edit_ctrl.deleteFeature)
 app.post('/api/feature', Edit_ctrl.createFeature)
+
+app.post('/api/deletechar', Chars_ctrl.delete)
