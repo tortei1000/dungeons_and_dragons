@@ -499,8 +499,6 @@ export default class SingleChar extends Component {
                     {/* this is the attributes conditional render */}
                     {(this.state.attToggle) ?
                         <div className="att_container" >
-                            <button className='button_char' onClick={this.saveAtt}>save</button>
-                            <button className='button_char' name="attToggle" value={this.state.attToggle} onClick={this.armorToggle}>cancel</button>
                             <div>
                                 <p name='str'>Strength: {this.state.str}
                                     <button className='button_char' value='this.state.str' name="str" onClick={e => this.strAdd(e)}>+</button>
@@ -531,11 +529,12 @@ export default class SingleChar extends Component {
                                     <button className='button_char' value='this.state.cha' name="cha" onClick={e => this.strAdd(e)}>+</button>
                                     <button className='button_char' value='this.state.cha' name="cha" onClick={this.strSub}>-</button></p>
                                 <p>bonus{this.bonusCalc(this.state.cha)}</p>
+                            <button className='button_char' onClick={this.saveAtt}>save</button>
+                            <button className='button_char' name="attToggle" value={this.state.attToggle} onClick={this.armorToggle}>cancel</button>
                             </div>
                         </div>
                         :
                         <div className="att_container">
-                            <button className='button_char' name="attToggle" value={this.state.attToggle} onClick={this.armorToggle}>edit</button>
                             <div>
                                 <p>Strength: {this.state.str} </p>
                                 <p>bonus{this.bonusCalc(this.state.str)}</p>
@@ -549,6 +548,7 @@ export default class SingleChar extends Component {
                                 <p>bonus{this.bonusCalc(this.state.wis)}</p>
                                 <p>Charisma: {this.state.cha}</p>
                                 <p>bonus{this.bonusCalc(this.state.cha)}</p>
+                            <button className='button_char' name="attToggle" value={this.state.attToggle} onClick={this.armorToggle}>edit</button>
                             </div>
                         </div>
                     }
@@ -556,8 +556,6 @@ export default class SingleChar extends Component {
                     {(this.state.skillsToggle) ?
 
                         <div className="skill_section_container">
-                            <button className='button_char' onClick={this.saveSkills}>save</button>
-                            <button className='button_char' name="skillsToggle" value={this.state.skillsToggle} onClick={this.armorToggle}>cancel</button>
                             <div>
                                 <p>Insipiration: <input name='inspiration' value={this.state.inspiration} onChange={this.handleChange} /></p>
                                 <p>Proficiency Bonus: <input name='proficiency_bonus' value={this.state.proficiency_bonus} onChange={this.handleChange} /></p>
@@ -589,12 +587,13 @@ export default class SingleChar extends Component {
                                 <p><input name='sleight_of_hand' value={this.state.sleight_of_hand} onChange={this.handleChange} /> sleight of hand (Dex)</p>
                                 <p><input name='stealth' value={this.state.stealth} onChange={this.handleChange} /> stealth (Dex)</p>
                                 <p><input name='survival' value={this.state.survival} onChange={this.handleChange} /> survival (Wis)</p>
+<button className='button_char' onClick={this.saveSkills}>save</button>
+<button className='button_char' name="skillsToggle" value={this.state.skillsToggle} onClick={this.armorToggle}>cancel</button>
                             </div>
                         </div>
 
                         :
                         <div className="skill_section_container">
-                            <button className='button_char' name="skillsToggle" value={this.state.skillsToggle} onClick={this.armorToggle}>edit</button>
                             <div>
                                 <p>Insipiration: {this.state.inspiration}</p>
                                 <p>Proficiency Bonus: {this.state.proficiency_bonus}</p>
@@ -626,15 +625,14 @@ export default class SingleChar extends Component {
                                 <p>{this.state.sleight_of_hand} sleight of hand (Dex)</p>
                                 <p>{this.state.stealth} stealth (Dex)</p>
                                 <p>{this.state.survival} survival (Wis)</p>
+                            <button className='button_char' name="skillsToggle" value={this.state.skillsToggle} onClick={this.armorToggle}>edit</button>
                             </div>
                         </div>
                     }
                     <div>
                         {/* this is the conditional render for armor class up to attacks (not including) */}
                         {(this.state.armorToggle) ?
-                            <>
-                                <button className='button_char' onClick={this.saveArmor}>save</button>
-                                <button className='button_char' name="armorToggle" value={this.state.armorToggle} onClick={this.armorToggle}>cancel</button>
+                            <div className='armor_container'>
                                 <div>
                                     <p>Armor Class <input name='armor_class' value={this.state.armor_class} onChange={this.handleChange} /></p>
                                     <p>Initiative <input name='initiative' value={this.state.initiative} onChange={this.handleChange} /></p>
@@ -664,10 +662,11 @@ export default class SingleChar extends Component {
                                         </p>
                                     </div>
                                 </div>
-                            </>
+                                <button className='button_char' onClick={this.saveArmor}>save</button>
+                                <button className='button_char' name="armorToggle" value={this.state.armorToggle} onClick={this.armorToggle}>cancel</button>
+                            </div>
                             :
-                            <>
-                                <button className='button_char' name="armorToggle" value={this.state.armorToggle} onClick={this.armorToggle}>edit</button>
+                            <div className='armor_container'>
                                 <div>
                                     <p>Armor Class {this.state.armor_class}</p>
                                     <p>Initiative {this.state.initiative}</p>
@@ -683,7 +682,8 @@ export default class SingleChar extends Component {
                                         <p>Failures {this.state.failures_1} {this.state.failures_2} {this.state.failures_3}</p>
                                     </div>
                                 </div>
-                            </>
+                                <button className='button_char' name="armorToggle" value={this.state.armorToggle} onClick={this.armorToggle}>edit</button>
+                            </div>
                         }
                         {/* this is the toggle for the attack section, there is a double toggle... one to edit and inside that one to create */}
                         {(this.state.attackToggle) ?
@@ -692,31 +692,32 @@ export default class SingleChar extends Component {
                                 <button className='button_char' name="attackToggle" value={this.state.attackToggle}
                                     onClick={() => this.setState({ attackToggle: false, createAttToggle: false })}>cancel</button>
                                 <p>Attacks & Spellcasting</p>
+                                <p>name   bonus   damage   type</p>
                                 {(this.state.createAttToggle) ?
                                     <div>
-                                        name: <input name='atk_name' onChange={this.handleChange} />
-                                        atk bonus: <input name='atk_bonus' onChange={this.handleChange} />
-                                        atk damage: <input name='atk_damage' onChange={this.handleChange} />
-                                        atk type: <input name='atk_type' onChange={this.handleChange} />
-                                        <button className='button_char' onClick={this.newAttack}>save new</button>
+                                    name: <input name='atk_name' onChange={this.handleChange} />
+                                    atk bonus: <input name='atk_bonus' onChange={this.handleChange} />
+                                    atk damage: <input name='atk_damage' onChange={this.handleChange} />
+                                    atk type: <input name='atk_type' onChange={this.handleChange} />
+                                    <button className='button_char' onClick={this.newAttack}>save new</button>
                                     </div>
-
+                                    
                                     :
                                     <div>
                                         {attacks.map((atk) => {
                                             return <div className="ind_att_container" key={atk.name} name={atk.name}>
                                                 <button name={atk.name} onClick={() => this.deleteThis(atk)}>X</button>
-                                                <p>{atk.name}</p>
-                                                <p>{atk.atk_bonus}</p>
-                                                <p>{atk.damage}</p>
-                                                <p>{atk.type}</p>
+                                                <p className='atk_name'>{atk.name}</p>
+                                                <p className='atk_bonus'>{atk.atk_bonus}</p>
+                                                <p className='atk_damage'>{atk.damage}</p>
+                                                <p className='atk_type'>{atk.type}</p>
                                             </div>
                                         })}
                                     </div>
                                 }
-                            </div>
-                            :
-                            <div className="attack_container">
+                                </div>
+                                :
+                                <div className="attack_container">
                                 <button className='button_char' name="attackToggle" value={this.state.attackToggle} onClick={this.armorToggle}>edit</button>
 
                                 <p>Attacks & Spellcasting</p>
@@ -736,7 +737,7 @@ export default class SingleChar extends Component {
                 <div>
                     {/* passive perception toggle just like attributes */}
                     {(this.state.perceptionToggle) ?
-                        <>
+                        <div className="perception">
                             <button className='button_char' onClick={this.savePerception}>save</button>
                             <button className='button_char' name="perceptionToggle" value={this.state.perceptionToggle} onClick={this.armorToggle}>cancel</button>
                             <div>{this.state.passive_perception} Passive Wisdom (Perception)
@@ -745,16 +746,16 @@ export default class SingleChar extends Component {
                                 <button className='button_char' value='this.state.passive_perception' name="passive_perception"
                                     onClick={this.strSub}>-</button>
                             </div>
-                        </>
+                        </div>
                         :
-                        <>
+                        <div className="perception">
                             <button className='button_char' name="perceptionToggle" value={this.state.perceptionToggle} onClick={this.armorToggle}>edit</button>
                             {this.state.passive_perception} Passive Wisdom (Perception)
-                        </>
+                        </div>
                     }
-
+                    <div className="prof_container">
                     {(this.state.profToggle ?
-                        <div>
+                        <div >
                             <button className='button_char' name="createProfToggle" value={this.state.createProfToggle} onClick={this.armorToggle}>create</button>
                             <button  className='button_char'name="profToggle" value={this.state.profToggle}
                                 onClick={() => this.setState({ profToggle: false, createProfToggle: false })}>cancel</button>
@@ -783,7 +784,7 @@ export default class SingleChar extends Component {
                                 )
                             })}
                                 </div>
-                                <div>Proficiencies:
+                                <div >Proficiencies:
                                     {proficiencies.map((prof) => {
                                     return (
                                         <div>
@@ -798,7 +799,7 @@ export default class SingleChar extends Component {
                             </div>
                         </div>
                         :
-                        <div>
+                        <div >
                             <button className='button_char' name="profToggle" value={this.state.profToggle} onClick={this.armorToggle} >edit</button>
                             <div>Other Proficiencies & Languages:
                                 <div>Languages:
@@ -816,11 +817,13 @@ export default class SingleChar extends Component {
                     )}
 
                 </div>
+                </div>
+                
 
-                <div>
+                <div className='equip'>
                     Equipament
                     {(this.state.gearToggle) ? 
-                    <div className="attack_container">
+                    <div >
                         <button className='button_char' name="createGearToggle" value={this.state.createGearToggle} onClick={this.armorToggle}>create</button>
                         <button className='button_char' name="gearToggle" value={this.state.gearToggle}
                             onClick={() => this.setState({ gearToggle: false, createGearToggle: false })}>cancel</button>
@@ -835,7 +838,7 @@ export default class SingleChar extends Component {
                         </div>
 
                         :
-                        <div className="attack_container">
+                        <div >
                             <p>Dungeoneer Pack:</p>
                             {dungeoneerPack.map((pack) => {
                             return <div key={pack.name}>
@@ -860,7 +863,7 @@ export default class SingleChar extends Component {
                         
                     </div>
                     :
-                    <div className="attack_container">
+                    <div >
                     <button className='button_char' name="gearToggle" value={this.state.gearToggle} onClick={this.armorToggle} >edit</button>
                     {dungeoneerPack.map((pack) => {
                         return <div key={pack.name}>

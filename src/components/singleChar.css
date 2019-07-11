@@ -67,37 +67,57 @@
 }
 
 
-.char_info_container{
-  display: grid;
-  margin: 0.5em;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(6, 40px);
-  justify-items: center;
-  align-items: center;
-  justify-content: center;
-}
+.single_char_container{
+  display: flex;
+  flex-direction: column;
+  margin: .5em;
+  font-size: 24px;
+ }
 
-#class_level{
-  grid-row: 1;
-  grid-column: 1/5;
-}
-.background_info{
-  grid-row: 2;
-  grid-column: 1/5;
-}
-.player_name{
-  grid-row: 3;
-  grid-column: 1/5;
-}
-.race{
-  grid-row: 4;
-  grid-column: 1/5;
-}
-.alignment{
-  grid-row: 5;
-  grid-column: 1/5;
-}
-.experience{
-  grid-row: 6;
-  grid-column: 1/5;
-}
+ .name_info_container{
+  margin: .5em;
+  border: dotted;
+ }
+
+ .att_container{
+  margin: .5em;
+  border: dotted;
+ }
+ .skill_section_container{
+  margin: .5em;
+  border: dotted;
+ }
+ .armor_container{
+  margin: .5em;
+  border: dotted;
+ }
+ 
+ .attack_container{
+  border: dotted;
+  margin: .5em;
+ }
+ .ind_att_container{
+  border-bottom: solid .5px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  font-size: 16px;
+  justify-items: center;
+ }
+ 
+ .perception{
+  margin: .5em;
+  border: dotted;
+ }
+ .prof_container{
+  margin: .5em;
+  border: dotted;
+ }
+ .equip{
+  margin: .5em;
+  border: dotted;
+ }
+ .trait_container{
+  margin: .5em;
+  border: dotted;
+ }
