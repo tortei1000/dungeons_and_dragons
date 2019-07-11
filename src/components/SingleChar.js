@@ -7,6 +7,7 @@ import FooterNav from './FooterNav'
 export default class SingleChar extends Component {
     state = {
         char: [],
+        spells:[],
         id: null,
         traits: false,
         featuresToggle: false,
@@ -208,6 +209,11 @@ export default class SingleChar extends Component {
         await axios.post(`/api/features/`, { char_name }).then(res => {
             this.setState({
                 features: res.data,
+            })
+        })
+        await axios.post(`/api/spells/`, { char_name }).then(res => {
+            this.setState({
+                spells: res.data,
             })
         })
     }
@@ -950,6 +956,17 @@ export default class SingleChar extends Component {
                         
                     </div>
                 
+                </div>
+                <div className='spells_container'>
+                    {this.state.spells.map((spell)=>{
+                        return <div>
+                            <p>{spell.name}</p>
+                            <p>{spell.description}</p>
+                            <p>{spell.cost}</p>
+                            <p>{spell.level}</p>
+                        </div>
+                    })}
+
                 </div>
                 <FooterNav char_name = {this.state.char_name} />
             </div>

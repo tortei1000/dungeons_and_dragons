@@ -45,6 +45,7 @@ app.post('/api/attacks', Chars_ctrl.getOneAttacks)
 app.post('/api/dPack', Chars_ctrl.getOneDPack)
 app.post('/api/outlander', Chars_ctrl.getOneOutlander)
 app.post('/api/features', Chars_ctrl.getOneFeatures)
+app.post('/api/spells', Chars_ctrl.getOneSpells)
 
 app.post('/api/charsInfo', Edit_ctrl.editCharInfo)
 app.post('/api/attributes', Edit_ctrl.saveAtt)

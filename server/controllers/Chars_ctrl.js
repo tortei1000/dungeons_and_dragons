@@ -123,7 +123,18 @@ module.exports = {
     }).catch(err=> console.log('error', err))
 
     
-  }
+  },
+  getOneSpells: async (req,res) => {
+    
+    const db = req.app.get('db')
+    let { id } = req.session.user
+    let {char_name} = req.body
+
+    let thisCharSpells = await db.get_one_spells([id, char_name])
+    
+    res.send(thisCharSpells)
+        
+  },
 }
 
 
