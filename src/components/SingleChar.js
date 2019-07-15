@@ -402,6 +402,17 @@ export default class SingleChar extends Component {
         })
         this.loadAllThings()
     }
+    deleteSpell = (item) => {
+        let { id } = item
+        let { char_name } = this.state
+
+        axios.put(`/api/spells/${id}`, { char_name }).then(res => {
+            this.setState({
+                spells: res.data
+            })
+        })
+        this.loadAllThings()
+    }
 
     newAttack = async () => {
         let { id, atk_name, atk_bonus, atk_damage, atk_type } = this.state
@@ -991,7 +1002,7 @@ export default class SingleChar extends Component {
                                 <p>{spell.description}</p>
                                 <p>{spell.cost}</p>
                                 <p>{spell.level}</p>
-                                <button className='button_char' name={spell.name} onClick={() => this.deleteFeature(spell)}>X</button>
+                                <button className='button_char' name={spell.name} onClick={() => this.deleteSpell(spell)}>X</button>
                                 </div>
                                 })}
                                 </div>

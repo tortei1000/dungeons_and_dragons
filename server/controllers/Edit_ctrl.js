@@ -211,7 +211,7 @@ module.exports = {
   },
 
   deleteFeature: async (req,res) => {
-    console.log(`delete feature fired`, req.params, req.session.user, req.body)
+    
     const db = req.app.get('db')
 
     let {id} = req.params
@@ -247,6 +247,20 @@ module.exports = {
     res.sendStatus(200)
 
     
+  },
+
+  deleteSpells: async (req,res) => {
+    
+    const db = req.app.get('db')
+
+    let {id} = req.params
+    let {id : user} = req.session.user
+    let {char_name} = req.body
+
+    let newSpell = await db.delete_spell([id, user, char_name])
+
+    res.send(newSpell)
+
   },
 
 }
