@@ -6,6 +6,7 @@ import Register from './components/auth/Register'
 import Home from './components/Home'
 import SingleChar from './components/SingleChar';
 import Combat from './components/Combat'
+import Spells from './components/Spells'
 
 export default (
   <Switch>
@@ -19,6 +20,6 @@ export default (
     <Route path='/home' component={Home} />
     <Route path="/singlechar/:char_name" component={SingleChar} />
     <Route path="/combat/:char_name" component={Combat} />
-    
+    <Route path="/spells/:char_name" component={Spells} />
   </Switch>
 )
