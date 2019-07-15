@@ -47,6 +47,7 @@ app.post('/api/outlander', Chars_ctrl.getOneOutlander)
 app.post('/api/features', Chars_ctrl.getOneFeatures)
 app.post('/api/spells', Chars_ctrl.getOneSpells)
 
+app.post('/api/newspell', Edit_ctrl.newSpell)
 app.post('/api/charsInfo', Edit_ctrl.editCharInfo)
 app.post('/api/attributes', Edit_ctrl.saveAtt)
 app.post('/api/skills', Edit_ctrl.saveSkills)

@@ -236,6 +236,17 @@ module.exports = {
 
     
   },
+  newSpell: async (req, res) => {
+    
+    const db = req.app.get('db')
 
+    let { id, spell_name, spell_desc, spell_uses, spell_level } = req.body
+
+    await db.create_spell([id, spell_name, spell_desc, spell_uses, spell_level])
+
+    res.sendStatus(200)
+
+    
+  },
 
 }

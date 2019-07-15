@@ -8,6 +8,8 @@ export default class SingleChar extends Component {
     state = {
         char: [],
         spells:[],
+        createSpells : false,
+        spellsToggle : false,
         id: null,
         traits: false,
         featuresToggle: false,
@@ -452,6 +454,15 @@ export default class SingleChar extends Component {
         this.loadAllThings()
         this.setState({
             createFeature: false
+        })
+    }
+
+    newSpell = async () => {
+        let { id, spell_name, spell_desc, spell_uses, spell_level } = this.state
+        await axios.post('/api/newspell', { id, spell_name, spell_desc, spell_uses, spell_level })
+        this.loadAllThings()
+        this.setState({
+            createSpells: false
         })
     }
 
@@ -957,15 +968,52 @@ export default class SingleChar extends Component {
                     </div>
                 
                 </div>
-                <div className='spells_container'>
-                    {this.state.spells.map((spell)=>{
-                        return <div>
-                            <p>{spell.name}</p>
-                            <p>{spell.description}</p>
-                            <p>{spell.cost}</p>
-                            <p>{spell.level}</p>
+                <div className='spells_container'> SPELLS:
+                    {(this.state.spellsToggle) ? 
+                    <>
+                        <button className='button_char' name="createSpells" value={this.state.createSpells} onClick={this.armorToggle}>create</button>
+                        <button className='button_char' name="spellsToggle" value={this.state.spellsToggle}
+                            onClick={() => this.setState({ spellsToggle: false, createSpells: false })}>cancel</button>
+                        
+                            {(this.state.createSpells) ?
+                        <div>
+                            new Spell: <input name='spell_name' onChange={this.handleChange} />
+                            description: <input name='spell_desc' onChange={this.handleChange} />
+                            uses: <input name='spell_uses' onChange={this.handleChange} />
+                            level: <input name='spell_level' onChange={this.handleChange} />
+                            <button className='button_char' onClick={this.newSpell}>save new</button>
                         </div>
-                    })}
+                    :
+                        <div>
+                            {this.state.spells.map((spell) => {
+                                return <div key={spell.name}>
+                                <p>{spell.name}</p>
+                                <p>{spell.description}</p>
+                                <p>{spell.cost}</p>
+                                <p>{spell.level}</p>
+                                <button className='button_char' name={spell.name} onClick={() => this.deleteFeature(spell)}>X</button>
+                                </div>
+                                })}
+                                </div>
+                            } 
+                         
+                    
+                    </>
+                    :
+                    <div>
+                        <button className='button_char' name="spellsToggle" value={this.state.spellsToggle} onClick={this.armorToggle} >edit</button>
+                        {this.state.spells.map((spell) => {
+                            return <div key={spell.name}>
+                                <p>{spell.name}</p>
+                                <p>{spell.description}</p>
+                                <p>{spell.cost}</p>
+                                <p>{spell.level}</p>
+                            </div>
+                        })}
+                        </div>
+                    }
+                
+                   
 
                 </div>
                 <FooterNav char_name = {this.state.char_name} />
