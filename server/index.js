@@ -36,6 +36,7 @@ app.post('/auth/register', Auth_ctrl.register)
 app.get('/auth/logout', Auth_ctrl.logout)
 app.get('/auth/users', Auth_ctrl.getUsers)
 
+app.get('/api/classes', Chars_ctrl.getClasses)
 app.get('/api/chars', Chars_ctrl.getAll)
 app.post('/api/chars/', Chars_ctrl.newChar)
 app.post('/api/character', Chars_ctrl.getOne)

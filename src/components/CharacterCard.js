@@ -12,6 +12,9 @@ class CharacterCard extends Component {
     super()
     this.state = {
       chars: [],
+      createToggle: false,
+      selectedClass : null,
+      classes : [],
       party: null,
       char_name: null,
       char_class: null,
@@ -90,9 +93,13 @@ class CharacterCard extends Component {
 
   componentDidMount() {
     axios.get(`/api/chars/`).then(res => {
-      
       this.setState({
         chars: res.data
+      })
+    })
+    axios.get('/api/classes/').then(res => {
+      this.setState({
+        classes: res.data
       })
     })
   }
@@ -105,9 +112,9 @@ class CharacterCard extends Component {
   }
 
   newChar = () => {
-    const { char_name, party } = this.state
+    const { char_name, party, selectedClass } = this.state
 
-    axios.post(`/api/chars/`, { char_name, party }).then(res => {
+    axios.post(`/api/chars/`, { char_name, party, selectedClass }).then(res => {
       this.setState({
         chars: res.data
       })
@@ -119,6 +126,13 @@ class CharacterCard extends Component {
     console.log(event.target.value)
     this.props.history.push(`/singlechar/${event.target.value}`)
   } 
+
+  setSelected = (e) => {
+    let { value, name } = e.target
+    this.setState({
+        [name]: value
+    })
+  }
 
   deleteChar = (id) =>{
     
@@ -133,7 +147,14 @@ class CharacterCard extends Component {
 
 
   render() {
-    
+    let classesMap = this.state.classes.map((item)=>{
+      return (
+        <div >
+          <button className='class_item' name='selectedClass' value={item.class} onClick={this.setSelected}>{item.class}</button>
+          
+        </div>
+      )
+    })
 
     let charsArr = this.state.chars.map((char) => {
       return (
@@ -152,10 +173,24 @@ class CharacterCard extends Component {
         <p>choose your character:</p>
         
         <div  onClick={this.handleCategories}>{charsArr}</div>
-        <p>or ...</p>
-        <p>Create new character: </p><input placeholder='character name' name="char_name" onChange={this.handleChange} />
-        <input placeholder='party name' name='party' onChange={this.handleChange} />
+        {(this.state.createToggle)?
+        <div className="pop_out_create">
+        <p>Create new character: </p>
+        <p>character name: </p><input placeholder='character name' name="char_name" onChange={this.handleChange} />
+        <p>party name: </p><input placeholder='party name' name='party' onChange={this.handleChange} />
+        <p>Choose your class: </p> <p>{this.state.selectedClass}</p>
+        <div className='select_class_container'>{classesMap}</div>
+        
+        
         <button onClick={this.newChar}>Create</button>
+        <button onClick={()=>this.setState({createToggle: !this.state.createToggle})}>cancel</button>
+        </div>
+        :
+        <>
+        <button onClick={()=>this.setState({createToggle: !this.state.createToggle})}>create a new character</button>
+        </>
+        }
+        
       </>
 
     )

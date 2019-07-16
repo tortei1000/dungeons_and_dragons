@@ -18,13 +18,24 @@ module.exports = {
     }).catch(err => console.log("error", err))
   },
 
+  getClasses: (req, res) => {
+    console.log('get classes fired')
+    const db = req.app.get('db')
+    
+    
+
+    db.get_classes().then((classes) => {
+      res.status(200).send(classes)
+    }).catch(err => console.log("error", err))
+  },
+
   newChar: (req, res) => {
     console.log('newChar was fired', req.body)
-    let {char_name, party} = req.body
+    let {char_name, party, selectedClass} = req.body
     const db = req.app.get('db')
     let {id} = req.session.user
 
-    db.new_char([id, char_name, party]).then((char)=> {
+    db.new_char([id, char_name, party, selectedClass]).then((char)=> {
       res.status(200).send(char)
 
     }).catch(err=> console.log('error', err))

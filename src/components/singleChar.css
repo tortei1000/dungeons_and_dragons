@@ -125,3 +125,37 @@
   margin: .5em;
   border: dotted;
  }
+
+ .pop_out_create{
+   width: 85%;
+   height: 500px;
+   background: rgb(5, 5, 54);
+   position: relative;
+   top: -400px;
+   border: solid;
+   z-index: 100;
+   margin: 1em;
+   color: white;
+
+ }
+
+ .select_class_container{
+  
+  
+  display: flex;
+  flex-wrap: wrap;
+  
+  justify-items: center;
+  align-items: center;
+  justify-content: space-evenly;
+  
+  
+}
+
+.class_item{
+  border: solid;
+  font-size: 20px;
+  margin: 1em;
+  width: 100px;
+  text-align: center;
+}

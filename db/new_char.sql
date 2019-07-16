@@ -1,3 +1,3 @@
-insert into chars(user_id, char_name, party) 
-values($1, $2, $3)
-returning user_id, char_name, party
+insert into chars(user_id, char_name, party, char_class) 
+values($1, $2, $3, $4)
+returning user_id, char_name, party, char_class
