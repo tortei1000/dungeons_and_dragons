@@ -107,7 +107,6 @@ export default class Spells extends Component {
     await axios.post(`/api/character/`, { char_name }).then(res => {
       this.setState({
         char: res.data,
-        spells : [],
         id: res.data.id,
         str: res.data.str,
         dex: res.data.dex,
@@ -209,28 +208,44 @@ export default class Spells extends Component {
         features: res.data,
       })
     })
+
+    await axios.post('/api/spells/', {char_name}).then(res => {
+      this.setState({
+        spells: res.data,
+      })
+    })
   }
 
 
 
   render() {
     
-
+    console.log(this.state.spells)
 
 
     return (
       <div >
         <>
+        <p>Spells:</p>
         {this.state.spells.map((spell) => {
           return <div key={spell.name}>
-            <p>{spell.name}</p>
-            <p>{spell.description}</p>
-            <p>{spell.cost}</p>
-            <p>{spell.level}</p>
+            <p>name: {spell.name}</p>
+            <p>description: {spell.description}</p>
+            <p>cost: {spell.cost}</p>
+            <p>level: {spell.level}</p>
             
             </div>
-            })}
-            
+          })}
+        <p>Features:</p> 
+        {this.state.features.map((feature)=>{
+          return <div key={feature.name}>
+          <p>name: {feature.name}</p>
+          <p>description: {feature.description}</p>
+          <p>uses: {feature.uses}</p>
+          
+          
+          </div>
+        })}
         
         
         

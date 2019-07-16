@@ -213,7 +213,7 @@ export default class Combat extends Component {
 
 
   render() {
-    console.log(`this os ${this.state.char_name}`)
+    
 
 
 
