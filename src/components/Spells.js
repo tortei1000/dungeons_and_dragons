@@ -224,33 +224,22 @@ export default class Spells extends Component {
 
 
     return (
-      <div >
-        <>
-        <p>Spells:</p>
-        {this.state.spells.map((spell) => {
-          return <div key={spell.name}>
-            <p>name: {spell.name}</p>
-            <p>description: {spell.description}</p>
-            <p>cost: {spell.cost}</p>
-            <p>level: {spell.level}</p>
-            
-            </div>
-          })}
-        <p>Features:</p> 
-        {this.state.features.map((feature)=>{
-          return <div key={feature.name}>
-          <p>name: {feature.name}</p>
-          <p>description: {feature.description}</p>
-          <p>uses: {feature.uses}</p>
-          
-          
-          </div>
-        })}
-        
-        
-        
-        </>
-        
+      <div>
+        <div className="spell_grid_container">
+          <p>Cantrips:</p>
+          <p>2</p>
+          <p>3</p>
+          <p>4</p>
+          <p>5</p>
+          <p>6</p>
+          <p>7</p>
+          <p>8</p>
+          <p>9</p>
+          <p>10</p>
+          <p>11</p>
+          <p>12</p>
+
+        </div>
         <FooterNav char_name={this.state.char_name} />
 
       </div>
