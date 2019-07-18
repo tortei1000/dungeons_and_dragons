@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import axios from 'axios'
 
 import FooterNav from './FooterNav'
+import Select from 'react-select'
+
 
 
 export default class Spells extends Component {
   state = {
     char: [],
     id: null,
+    selectedOption: null,
+    cantrips: [],
     traits: false,
     featuresToggle: false,
     createFeature: false,
@@ -96,9 +100,11 @@ export default class Spells extends Component {
 
   }
 
+  
+ 
   componentDidMount() {
     this.loadAllThings()
-
+     
   }
 
   loadAllThings = async () => {
@@ -209,24 +215,49 @@ export default class Spells extends Component {
       })
     })
 
-    await axios.post('/api/spells/', {char_name}).then(res => {
+    await axios.post('/api/spells/', { char_name }).then(res => {
       this.setState({
         spells: res.data,
       })
     })
   }
 
+  handleChange = selectedOption => {
+    this.setState({ selectedOption });
+    
+  };
+
+  addSpell = () => {
+    console.log(this.state.cantrips)
+    this.state.cantrips.push(this.state.selectedOption.label)
+  }
+  
 
 
   render() {
-    
-    console.log(this.state.spells)
-
+    console.log(this.state.cantrips)
+    const {selectedOption} = this.state
+    let cantripArray = this.state.cantrips.map((cantrip)=>{
+      return <div>
+        {cantrip.label}
+      </div>
+    })
 
     return (
       <div>
         <div className="spell_grid_container">
-          <p>Cantrips:</p>
+          <div>Cantrips:
+            <Select 
+            value={selectedOption}
+            onChange={this.handleChange}
+            options={this.state.spells.map(spell => ({ label: spell.name, value: spell.name }))}
+            />
+            <button onClick={this.addSpell}>+</button>
+            <div>{this.state.cantrips.map((cantrip)=>{
+              return <div>{cantrip.label}</div>
+            })}</div>
+            {cantripArray}
+          </div>
           <p>2</p>
           <p>3</p>
           <p>4</p>
