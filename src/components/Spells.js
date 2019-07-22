@@ -253,94 +253,107 @@ export default class Spells extends Component {
     })
   }
 
+  deleteSpell = (id) =>{
+    axios.post('/api/removecantrips/', {id}).then(res=>{
+      this.setState({
+        cantrips: res.data
+      })
+    })
+    window.location.reload()
+  }
+
 
 
   render() {
     console.log('this is the render', this.state.cantrips)
-    const { selectedOption, selectedOption1 } = this.state
+    const { selectedOption } = this.state
 
 
 
     return (
-      <div><Select
-        value={selectedOption}
-        onChange={this.handleChange}
-        options={this.state.spells.map(spell => ({ label: spell.name, value: spell.name }))}
-      />
+      <div>
+        <Select
+          value={selectedOption}
+          onChange={this.handleChange}
+          options={this.state.spells.map(spell => ({ label: spell.name, value: spell.name }))}
+        />
         <input value={this.state.spell_level} name='spell_level' placeholder='level' onChange={this.inputChange} />
         <button onClick={this.addSpell}>+</button>
         <div className="spell_grid_container">
 
-          <div>Cantrips:
+
           {this.state.cantrips.map((cantrip) => {
             if (cantrip.level === 'cantrip')
-              return <p>{cantrip.name}</p>
+              return <div>
+                <p>{cantrip.name}</p>
+                <button onClick={()=>this.deleteSpell(cantrip.id)}>x</button>
+                </div>
           })}
 
-          </div>
-          <div>level 1
+        
+        <div>level 1
           {this.state.cantrips.map((cantrip) => {
-            if (cantrip.level === '1')
-              return <p>{cantrip.name}</p>
-          })}
-
-          </div>
-          <div>level 2
-          {this.state.cantrips.map((cantrip) => {
-            if (cantrip.level === '2')
-              return <p>{cantrip.name}</p>
-          })}
-          </div>
-          <div>level 3
-          {this.state.cantrips.map((cantrip) => {
-            if (cantrip.level === '3')
-              return <p>{cantrip.name}</p>
-          })}
-          </div>
-          <div>level 4
-          {this.state.cantrips.map((cantrip) => {
-            if (cantrip.level === '4')
-              return <p>{cantrip.name}</p>
-          })}
-          </div>
-          <div>level 5
-          {this.state.cantrips.map((cantrip) => {
-            if (cantrip.level === '5')
-              return <p>{cantrip.name}</p>
-          })}
-          </div>
-          <div>level 6
-          {this.state.cantrips.map((cantrip) => {
-            if (cantrip.level === '6')
-              return <p>{cantrip.name}</p>
-          })}
-          </div>
-          <div>level 7
-          {this.state.cantrips.map((cantrip) => {
-            if (cantrip.level === '7')
-              return <p>{cantrip.name}</p>
-          })}
-          </div>
-          <div>level 8
-          {this.state.cantrips.map((cantrip) => {
-            if (cantrip.level === '8')
-              return <p>{cantrip.name}</p>
-          })}
-          </div>
-          <div>level 9
-          {this.state.cantrips.map((cantrip) => {
-            if (cantrip.level === '9')
-              return <p>{cantrip.name}</p>
-          })}
-          </div>
-
-
-
-          </div>
-          <FooterNav char_name={this.state.char_name} />
+          if (cantrip.level === '1')
+            return <p>{cantrip.name}</p>
+        })}
 
         </div>
+        <div>level 2
+          {this.state.cantrips.map((cantrip) => {
+          if (cantrip.level === '2')
+            return <p>{cantrip.name}</p>
+        })}
+        </div>
+        <div>level 3
+          {this.state.cantrips.map((cantrip) => {
+          if (cantrip.level === '3')
+            return <p>{cantrip.name}</p>
+        })}
+        </div>
+        <div>level 4
+          {this.state.cantrips.map((cantrip) => {
+          if (cantrip.level === '4')
+            return <p>{cantrip.name}</p>
+        })}
+        </div>
+        <div>level 5
+          {this.state.cantrips.map((cantrip) => {
+          if (cantrip.level === '5')
+            return <p>{cantrip.name}</p>
+        })}
+        </div>
+        <div>level 6
+          {this.state.cantrips.map((cantrip) => {
+          if (cantrip.level === '6')
+            return <p>{cantrip.name}</p>
+        })}
+        </div>
+        <div>level 7
+          {this.state.cantrips.map((cantrip) => {
+          if (cantrip.level === '7')
+            return <p>{cantrip.name}</p>
+        })}
+        </div>
+        <div>level 8
+          {this.state.cantrips.map((cantrip) => {
+          if (cantrip.level === '8')
+            return <p>{cantrip.name}</p>
+        })}
+        </div>
+        <div>level 9
+          {this.state.cantrips.map((cantrip) => {
+          if (cantrip.level === '9')
+            return <p>{cantrip.name}</p>
+        })}
+        </div>
+
+
+
+      </div>
+      <FooterNav char_name={this.state.char_name} />
+
+        </div >
 
         )
-      }
-    }
+  }
+}
