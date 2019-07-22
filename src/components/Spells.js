@@ -272,7 +272,6 @@ export default class Spells extends Component {
         <div className="spell_grid_container">
 
           <div>Cantrips:
-
           {this.state.cantrips.map((cantrip) => {
             if (cantrip.level === 'cantrip')
               return <p>{cantrip.name}</p>
