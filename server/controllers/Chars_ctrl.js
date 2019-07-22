@@ -170,6 +170,18 @@ module.exports = {
     res.send(thisCharSpells)
         
   },
+  removeCantrip: async (req,res) => {
+    
+    const db = req.app.get('db')
+    
+    let {id : user} = req.session.user
+    let {id} = req.body
+
+    let thisCharSpells = await db.delete_cantrips([id, user])
+    
+    res.send(thisCharSpells)
+        
+  },
 
 }
 

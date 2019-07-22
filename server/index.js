@@ -49,6 +49,7 @@ app.post('/api/features', Chars_ctrl.getOneFeatures)
 app.post('/api/spells', Chars_ctrl.getOneSpells)
 app.post(`/api/addcantrips`, Chars_ctrl.addCantrip)
 app.post(`/api/cantrips/`, Chars_ctrl.getOneCantrips)
+app.post(`/api/removecantrips/`, Chars_ctrl.removeCantrip)
 
 app.post('/api/newspell', Edit_ctrl.newSpell)
 app.post('/api/charsInfo', Edit_ctrl.editCharInfo)
