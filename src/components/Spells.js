@@ -11,6 +11,7 @@ export default class Spells extends Component {
     char: [],
     id: null,
     selectedOption: null,
+    spell_level: null,
     cantrips: [],
     traits: false,
     featuresToggle: false,
@@ -100,11 +101,11 @@ export default class Spells extends Component {
 
   }
 
-  
- 
+
+
   componentDidMount() {
     this.loadAllThings()
-     
+
   }
 
   loadAllThings = async () => {
@@ -217,64 +218,130 @@ export default class Spells extends Component {
 
     await axios.post('/api/spells/', { char_name }).then(res => {
       this.setState({
-        spells: res.data,
+        spells: res.data
       })
     })
+
+    await axios.post('/api/cantrips/', { char_name }).then(res => {
+      this.setState({
+        cantrips: res.data
+      })
+    })
+
   }
 
   handleChange = selectedOption => {
     this.setState({ selectedOption });
-    
+
   };
 
   addSpell = () => {
-    console.log(this.state.cantrips)
-    this.state.cantrips.push(this.state.selectedOption.label)
+    let { selectedOption, id, spell_level } = this.state
+    let cantripName = selectedOption.label
+    axios.post(`/api/addcantrips/`, { id, cantripName, spell_level }).then(res => {
+      this.setState({
+        cantrips: res.data
+      })
+    })
+    window.location.reload()
   }
-  
+
+  inputChange = (e) => {
+    let { value, name } = e.target
+    this.setState({
+      [name]: value
+    })
+  }
+
 
 
   render() {
-    console.log(this.state.cantrips)
-    const {selectedOption} = this.state
-    let cantripArray = this.state.cantrips.map((cantrip)=>{
-      return <div>
-        {cantrip.label}
-      </div>
-    })
+    console.log('this is the render', this.state.cantrips)
+    const { selectedOption, selectedOption1 } = this.state
+
+
 
     return (
-      <div>
+      <div><Select
+        value={selectedOption}
+        onChange={this.handleChange}
+        options={this.state.spells.map(spell => ({ label: spell.name, value: spell.name }))}
+      />
+        <input value={this.state.spell_level} name='spell_level' placeholder='level' onChange={this.inputChange} />
+        <button onClick={this.addSpell}>+</button>
         <div className="spell_grid_container">
+
           <div>Cantrips:
-            <Select 
-            value={selectedOption}
-            onChange={this.handleChange}
-            options={this.state.spells.map(spell => ({ label: spell.name, value: spell.name }))}
-            />
-            <button onClick={this.addSpell}>+</button>
-            <div>{this.state.cantrips.map((cantrip)=>{
-              return <div>{cantrip.label}</div>
-            })}</div>
-            {cantripArray}
+
+          {this.state.cantrips.map((cantrip) => {
+            if (cantrip.level === 'cantrip')
+              return <p>{cantrip.name}</p>
+          })}
+
           </div>
-          <p>2</p>
-          <p>3</p>
-          <p>4</p>
-          <p>5</p>
-          <p>6</p>
-          <p>7</p>
-          <p>8</p>
-          <p>9</p>
-          <p>10</p>
-          <p>11</p>
-          <p>12</p>
+          <div>level 1
+          {this.state.cantrips.map((cantrip) => {
+            if (cantrip.level === '1')
+              return <p>{cantrip.name}</p>
+          })}
+
+          </div>
+          <div>level 2
+          {this.state.cantrips.map((cantrip) => {
+            if (cantrip.level === '2')
+              return <p>{cantrip.name}</p>
+          })}
+          </div>
+          <div>level 3
+          {this.state.cantrips.map((cantrip) => {
+            if (cantrip.level === '3')
+              return <p>{cantrip.name}</p>
+          })}
+          </div>
+          <div>level 4
+          {this.state.cantrips.map((cantrip) => {
+            if (cantrip.level === '4')
+              return <p>{cantrip.name}</p>
+          })}
+          </div>
+          <div>level 5
+          {this.state.cantrips.map((cantrip) => {
+            if (cantrip.level === '5')
+              return <p>{cantrip.name}</p>
+          })}
+          </div>
+          <div>level 6
+          {this.state.cantrips.map((cantrip) => {
+            if (cantrip.level === '6')
+              return <p>{cantrip.name}</p>
+          })}
+          </div>
+          <div>level 7
+          {this.state.cantrips.map((cantrip) => {
+            if (cantrip.level === '7')
+              return <p>{cantrip.name}</p>
+          })}
+          </div>
+          <div>level 8
+          {this.state.cantrips.map((cantrip) => {
+            if (cantrip.level === '8')
+              return <p>{cantrip.name}</p>
+          })}
+          </div>
+          <div>level 9
+          {this.state.cantrips.map((cantrip) => {
+            if (cantrip.level === '9')
+              return <p>{cantrip.name}</p>
+          })}
+          </div>
+
+
+
+          </div>
+          <FooterNav char_name={this.state.char_name} />
 
         </div>
-        <FooterNav char_name={this.state.char_name} />
 
-      </div>
-
-    )
-  }
-}
+        )
+      }
+    }

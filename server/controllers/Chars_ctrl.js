@@ -146,6 +146,31 @@ module.exports = {
     res.send(thisCharSpells)
         
   },
+  addCantrip: async (req,res) => {
+    console.log(req.body)
+    const db = req.app.get('db')
+    
+    let {id, cantripName, spell_level} = req.body
+    
+
+    let thisCharSpells = await db.add_cantrip([id, cantripName, spell_level])
+    
+    res.send(thisCharSpells)
+        
+  },
+
+  getOneCantrips: async (req,res) => {
+    
+    const db = req.app.get('db')
+    let { id } = req.session.user
+    let {char_name} = req.body
+
+    let thisCharSpells = await db.get_one_cantrips([id, char_name])
+    
+    res.send(thisCharSpells)
+        
+  },
+
 }
 
 
