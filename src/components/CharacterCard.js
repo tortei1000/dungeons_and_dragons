@@ -13,7 +13,8 @@ class CharacterCard extends Component {
     super()
     this.state = {
       chars: [],
-      guild_name : null,
+      partyToggle: false,
+      party_name : null,
       createToggle: false,
       selectedClass : null,
       classes : [],
@@ -98,15 +99,21 @@ class CharacterCard extends Component {
     this.loadAllThings()
   }
 
-  loadAllThings = () => {
-     axios.get(`/api/chars/`).then(res => {
+  loadAllThings = async() => {
+     await axios.get(`/api/chars/`).then(res => {
       this.setState({
-        chars: res.data
+        chars: res.data,
+        user_id: res.data.user_id
       })
     })
-     axios.get('/api/classes/').then(res => {
+     await axios.get('/api/classes/').then(res => {
       this.setState({
         classes: res.data
+      })
+    })
+    await axios.get('/api/parties/').then(res=>{
+      this.setState({
+        party_name : res.data
       })
     })
      
@@ -153,10 +160,30 @@ class CharacterCard extends Component {
     window.location.reload()
   }
 
+  conditionalToggle = (e) => {
+
+    let { name, value } = e.target
+
+    this.setState({
+        [`${name}`]: !eval(value)
+    })
+
+  }
+
+  saveName = () => {
+    let {party_name} = this.state
+    
+    axios.post('/api/partyname/', {party_name})
+    this.setState({
+      partyToggle : !this.state.partyToggle
+    })
+
+  }
+
 
   render() {
-
-    console.log(this.state.party)
+    
+    
     let classesMap = this.state.classes.map((item)=>{
       return (
         <div >
@@ -183,8 +210,21 @@ class CharacterCard extends Component {
     })
     return (
       <>
-        <p>{this.state.guild_name}</p>
+        <div className="conditional_render_input_for_party">
+          {(!this.state.partyToggle)?
+          <>
+          <button className='button_char' name="partyToggle" value={this.state.partyToggle} 
+          onClick={this.conditionalToggle}>edit</button>
+          <p>{this.state.party_name}</p>
+          </>
+          :
+          <>
+            <input name='party_name' value={this.state.party_name} onChange={this.handleChange} />
+            <button onClick={this.saveName}>save</button>
+          </>
+          }
         
+        </div>
         
         <div  onClick={this.handleCategories}>{charsArr}</div>
         {(this.state.createToggle)?

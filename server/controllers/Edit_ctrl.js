@@ -271,7 +271,7 @@ module.exports = {
 
     let thisCharParties = await db.get_parties([id])
     
-    res.send(thisCharParties)
+    res.send(thisCharParties[0].party_name)
         
   },
 

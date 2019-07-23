@@ -183,6 +183,19 @@ module.exports = {
         
   },
 
+  editPartyName: async (req,res) => {
+    console.log('edit fired',req.body)
+    const db = req.app.get('db')
+    
+    let {party_name} = req.body
+    let { id } = req.session.user
+
+    let thisCharParty = await db.edit_party_name([party_name, id])
+    
+    res.send(thisCharParty)
+        
+  },
+
 }
 
 
