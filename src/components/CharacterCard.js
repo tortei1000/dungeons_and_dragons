@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { async } from 'q';
 
 
 
@@ -12,10 +13,11 @@ class CharacterCard extends Component {
     super()
     this.state = {
       chars: [],
+      guild_name : null,
       createToggle: false,
       selectedClass : null,
       classes : [],
-      party: null,
+      last_name: null,
       char_name: null,
       char_class: null,
       char_level: null,
@@ -91,17 +93,23 @@ class CharacterCard extends Component {
     }
   }
 
-  componentDidMount() {
-    axios.get(`/api/chars/`).then(res => {
+  componentDidMount () {
+    
+    this.loadAllThings()
+  }
+
+  loadAllThings = () => {
+     axios.get(`/api/chars/`).then(res => {
       this.setState({
         chars: res.data
       })
     })
-    axios.get('/api/classes/').then(res => {
+     axios.get('/api/classes/').then(res => {
       this.setState({
         classes: res.data
       })
     })
+     
   }
 
   handleChange = (e) => {
@@ -147,6 +155,8 @@ class CharacterCard extends Component {
 
 
   render() {
+
+    console.log(this.state.party)
     let classesMap = this.state.classes.map((item)=>{
       return (
         <div >
@@ -156,12 +166,15 @@ class CharacterCard extends Component {
       )
     })
 
+    
+
     let charsArr = this.state.chars.map((char) => {
       return (
         <div className='select_char_container'>
-          <p className="char_name_container">character name:  {char.char_name}</p>
-          <p className="char_class_container">class:  {char.char_class}</p>
-          <p className="char_party_container">party:  {char.party}</p>
+          <p > {char.char_name}</p>
+          <p > {char.last_name}</p>
+          <p className="char_class_container">  {char.char_class}</p>
+          <p className="char_party_container">  {char.race}</p>
           <button className='button_char' key={char.char_name} value={char.char_name}>SELECT</button>
           <button onClick={()=>this.deleteChar(char.id)}>delete</button>
         </div>
@@ -170,7 +183,8 @@ class CharacterCard extends Component {
     })
     return (
       <>
-        <p>choose your character:</p>
+        <p>{this.state.guild_name}</p>
+        
         
         <div  onClick={this.handleCategories}>{charsArr}</div>
         {(this.state.createToggle)?

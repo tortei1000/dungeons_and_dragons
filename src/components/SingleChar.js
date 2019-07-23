@@ -214,6 +214,7 @@ export default class SingleChar extends Component {
             })
         })
         await axios.post(`/api/spells/`, { char_name }).then(res => {
+            console.log(" ai m running")
             this.setState({
                 spells: res.data,
             })

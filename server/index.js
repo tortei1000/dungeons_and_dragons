@@ -71,5 +71,6 @@ app.post('/api/traits', Edit_ctrl.editTraits)
 app.put(`/api/feature/:id`, Edit_ctrl.deleteFeature)
 app.post('/api/feature', Edit_ctrl.createFeature)
 app.put(`/api/spells/:id`, Edit_ctrl.deleteSpells)
+app.get('/api/parties/', Edit_ctrl.getParty)
 
 app.post('/api/deletechar', Chars_ctrl.delete)
