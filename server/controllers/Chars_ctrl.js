@@ -31,11 +31,11 @@ module.exports = {
 
   newChar: (req, res) => {
     console.log('newChar was fired', req.body)
-    let {char_name, party, selectedClass} = req.body
+    let {char_name, last_name, selectedClass} = req.body
     const db = req.app.get('db')
     let {id} = req.session.user
 
-    db.new_char([id, char_name, party, selectedClass]).then((char)=> {
+    db.new_char([id, char_name, last_name, selectedClass]).then((char)=> {
       res.status(200).send(char)
 
     }).catch(err=> console.log('error', err))
