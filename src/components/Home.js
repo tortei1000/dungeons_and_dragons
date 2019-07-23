@@ -33,7 +33,7 @@ class Home extends Component {
             
             {username && <div>Welcome, {username}  <button className="logout_button" onClick={() => {
                         this.props.logout()
-                        axios.get('/auth/logout').then(() => { this.props.history.push('/home') })
+                        axios.get('/auth/logout').then(() => { this.props.history.push('/') })
 
 
                     }}>logout</button></div>}

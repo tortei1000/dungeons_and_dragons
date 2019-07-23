@@ -10,7 +10,7 @@ import Spells from './components/Spells'
 
 export default (
   <Switch>
-    <Route exact path='/' component={Home} />
+    <Route exact path='/' component={Register} />
     <Route path='/login' component={() => (
       <Login>
         <Register />

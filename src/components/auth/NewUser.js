@@ -12,7 +12,8 @@ class NewUser extends Component {
             username: '',
             password: '',
             loginError: false,
-            loginErrorMessage: 'Username taken, please try a different one.'
+            loginErrorMessage: 'Username taken, please try a different one.',
+            registerToggle: false
         }
     }
 
@@ -23,9 +24,15 @@ class NewUser extends Component {
         })
     }
 
+    conditionalToggle = () => {
+        this.setState({
+            registerToggle: !this.state.registerToggle
+        })
+    }
+
     handleNewUserFormSubmit = async (e) => {
         e.preventDefault()
-        
+        console.log('handle active')
         const { username, password } = this.state
         try {
             const res = await axios.post('/auth/register', { username, password })
@@ -40,26 +47,36 @@ class NewUser extends Component {
     render() {
         return (
             <>
-                
-                <form className="form_container" onSubmit={this.handleNewUserFormSubmit}>
-                    <div className="login_subheader">Username</div>
-                    <input className="input_container"
-                        type='text'
-                        name='username'
-                        value={this.state.username}
-                        onChange={this.handleFormInputUpdate}
-                    />
-                    <div className="login_subheader">Password</div>
-                    <input className="input_container"
-                        type='text'
-                        name='password'
-                        value={this.state.password}
-                        onChange={this.handleFormInputUpdate}
-                    />
-                    
-                    <button className="login_button">Sign-up</button>
-                </form>
-                
+                {this.state.registerToggle ?
+                    <>
+                        <form className="form_container" onSubmit={this.handleNewUserFormSubmit}>
+                            <div className="login_subheader">Party Name</div>
+                            <input className="input_container"
+                                type='text'
+                                name='username'
+                                value={this.state.username}
+                                onChange={this.handleFormInputUpdate}
+                            />
+                            <br></br>
+                            <div className="login_subheader">Party Code</div>
+                            <input className="input_container"
+                                type='text'
+                                name='password'
+                                value={this.state.password}
+                                onChange={this.handleFormInputUpdate}
+                            />
+                            <br></br>
+                            <br></br>
+                            <button className="login_button" >Save</button>
+                        </form>
+                    </>
+                    :
+                    <>
+                    <button className="login_button" onClick={this.conditionalToggle}>Create New Party</button>
+                    </>
+                }
+
+
                 {this.state.loginError && <h3>{this.state.loginErrorMessage}</h3>}
             </>
         )
