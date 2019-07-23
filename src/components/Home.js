@@ -30,10 +30,10 @@ class Home extends Component {
       <div>
          {this.props.username ? (
           <div>
-            hello logged in
+            
             {username && <div>Welcome, {username}  <button className="logout_button" onClick={() => {
                         this.props.logout()
-                        axios.get('/auth/logout').then(() => { this.props.history.push('/home') })
+                        axios.get('/auth/logout').then(() => { this.props.history.push('/') })
 
 
                     }}>logout</button></div>}

@@ -127,9 +127,9 @@ class CharacterCard extends Component {
   }
 
   newChar = () => {
-    const { char_name, party, selectedClass } = this.state
+    const { char_name,last_name, selectedClass } = this.state
 
-    axios.post(`/api/chars/`, { char_name, party, selectedClass }).then(res => {
+    axios.post(`/api/chars/`, { char_name, last_name, selectedClass }).then(res => {
       this.setState({
         chars: res.data
       })
@@ -215,7 +215,7 @@ class CharacterCard extends Component {
           <>
           <button className='button_char' name="partyToggle" value={this.state.partyToggle} 
           onClick={this.conditionalToggle}>edit</button>
-          <p>{this.state.party_name}</p>
+          <p style={{fontSize: '30px', margin: '1em'}}>{this.state.party_name}</p>
           </>
           :
           <>
@@ -230,8 +230,8 @@ class CharacterCard extends Component {
         {(this.state.createToggle)?
         <div className="pop_out_create">
         <p>Create new character: </p>
-        <p>character name: </p><input placeholder='character name' name="char_name" onChange={this.handleChange} />
-        <p>party name: </p><input placeholder='party name' name='party' onChange={this.handleChange} />
+        <p>character first name: </p><input placeholder='character  first name' name="char_name" onChange={this.handleChange} />
+        <p>character last name: </p><input placeholder='character last name' name="last_name" onChange={this.handleChange} />
         <p>Choose your class: </p> <p>{this.state.selectedClass}</p>
         <div className='select_class_container'>{classesMap}</div>
         
