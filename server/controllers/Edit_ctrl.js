@@ -263,4 +263,16 @@ module.exports = {
 
   },
 
+  getParty: async (req,res) => {
+    console.log('get aprty fired', req.body)
+    const db = req.app.get('db')
+    let { id } = req.session.user
+    
+
+    let thisCharParties = await db.get_parties([id])
+    
+    res.send(thisCharParties)
+        
+  },
+
 }
