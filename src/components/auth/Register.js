@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { updateUserId, updateUsername } from '../../redux/auth_reducer'
 import axios from 'axios'
+import "../styles/styles.css"
 
 class Register extends Component {
     constructor() {
@@ -41,27 +42,41 @@ class Register extends Component {
 
     render() {
         return (
-            <>
-                
-                <form className="form_container" onSubmit={this.handleLoginFormSubmit}>
-                    <div className="login_subheader">Username</div>
-                    <input className="input_container"
-                        type='text'
-                        name='loginUsername'
-                        value={this.state.loginUsername}
-                        onChange={this.handleFormInputUpdate}
-                    />
-                    <div className="login_subheader">Password</div>
-                    <input className="input_container"
-                        type='text'
-                        name='loginPassword'
-                        value={this.state.loginPassword}
-                        onChange={this.handleFormInputUpdate}
-                    />
-                    <button className="login_button">Login</button>
-                </form>
-                {this.state.loginError && <h3>{this.state.loginErrorMessage}</h3>}
-            </>
+            <div class="login_bg">
+                <div className="login_box">
+
+                    <h1>Tabletop RPG Characters Sheets</h1>
+                    
+                    <form onSubmit={this.handleLoginFormSubmit}>
+
+                    
+                        <input className="pill"
+                            type='text'
+                            name='loginUsername'
+                            value={this.state.loginUsername}
+                            onChange={this.handleFormInputUpdate}
+                            placeholder='Party Name'
+                        />
+
+                        <br></br>
+
+                        <input className="pill"
+                            type='text'
+                            name='loginPassword'
+                            value={this.state.loginPassword}
+                            onChange={this.handleFormInputUpdate}
+                            placeholder='Party Code'
+                        />
+
+                        <br></br>
+
+                        <button className="login_button">Sign in</button>
+                        
+                    </form>
+                    {this.state.loginError && <h3>{this.state.loginErrorMessage}</h3>}
+
+                </div>
+            </div>
         )
     }
 }
