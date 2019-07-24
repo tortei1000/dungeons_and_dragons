@@ -170,6 +170,17 @@ module.exports = {
     res.send(thisCharSpells)
         
   },
+  getOneLevel1: async (req,res) => {
+    
+    const db = req.app.get('db')
+    let { id } = req.session.user
+    let {char_name} = req.body
+
+    let thisCharSpells = await db.get_one_level1([id, char_name])
+    
+    res.send(thisCharSpells)
+        
+  },
   removeCantrip: async (req,res) => {
     
     const db = req.app.get('db')

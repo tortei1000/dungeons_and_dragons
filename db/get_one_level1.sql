@@ -1,2 +1,2 @@
 select * from spell_book
-where level = 0
+where level = 1

@@ -198,12 +198,12 @@ class CharacterCard extends Component {
     let charsArr = this.state.chars.map((char) => {
       return (
         <div className='select_char_container'>
-          <p > {char.char_name}</p>
-          <p > {char.last_name}</p>
+          <p className="char_name_container"> {char.char_name}</p>
+          <p className='char_last_name_container'> {char.last_name}</p>
           <p className="char_class_container">  {char.char_class}</p>
           <p className="char_party_container">  {char.race}</p>
           <button className='button_char' key={char.char_name} value={char.char_name}>SELECT</button>
-          <button onClick={()=>this.deleteChar(char.id)}>delete</button>
+          <button className='delete_button' onClick={()=>this.deleteChar(char.id)}>delete</button>
         </div>
       )
 
@@ -215,7 +215,7 @@ class CharacterCard extends Component {
           <>
           <button className='button_char' name="partyToggle" value={this.state.partyToggle} 
           onClick={this.conditionalToggle}>edit</button>
-          <p style={{fontSize: '30px', margin: '1em'}}>{this.state.party_name}</p>
+          <h1>{this.state.party_name}</h1>
           </>
           :
           <>
@@ -226,7 +226,7 @@ class CharacterCard extends Component {
         
         </div>
         
-        <div  onClick={this.handleCategories}>{charsArr}</div>
+        <div className="char_flex_box" onClick={this.handleCategories}>{charsArr}</div>
         {(this.state.createToggle)?
         <div className="pop_out_create">
         <p>Create new character: </p>

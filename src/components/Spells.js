@@ -13,6 +13,15 @@ export default class Spells extends Component {
     selectedOption: null,
     spell_level: null,
     cantrips: [],
+    level1: [],
+    level2: [],
+    level3: [],
+    level4: [],
+    level5: [],
+    level6: [],
+    level7: [],
+    level8: [],
+    level9: [],
     traits: false,
     featuresToggle: false,
     createFeature: false,
@@ -227,6 +236,11 @@ export default class Spells extends Component {
         cantrips: res.data
       })
     })
+    await axios.post('/api/level1/', { char_name }).then(res => {
+      this.setState({
+        level1: res.data
+      })
+    })
 
   }
 
@@ -253,8 +267,8 @@ export default class Spells extends Component {
     })
   }
 
-  deleteSpell = (id) =>{
-    axios.post('/api/removecantrips/', {id}).then(res=>{
+  deleteSpell = (id) => {
+    axios.post('/api/removecantrips/', { id }).then(res => {
       this.setState({
         cantrips: res.data
       })
@@ -272,88 +286,98 @@ export default class Spells extends Component {
 
     return (
       <div>
-        <Select
-          value={selectedOption}
-          onChange={this.handleChange}
-          options={this.state.spells.map(spell => ({ label: spell.name, value: spell.name }))}
-        />
-        <input value={this.state.spell_level} name='spell_level' placeholder='level' onChange={this.inputChange} />
-        <button onClick={this.addSpell}>+</button>
+
+        {/* <input value={this.state.spell_level} name='spell_level' placeholder='level' onChange={this.inputChange} />
+        <button onClick={this.addSpell}>+</button> */}
         <div className="spell_grid_container">
+          <div>
+            <h2>Cantrips</h2>
+            <div className="select_contain">
+              <Select
+                value={selectedOption}
+                onChange={this.handleChange}
+                options={this.state.cantrips.map(spell => ({ label: spell.name, value: spell.name }))}
+              />
+            </div>
+            <button onClick={this.addSpell}>+</button> 
+          </div>
+
+          <div>
+            <h2>level 1</h2>
+            <div className="select_contain">
+              <Select
+                value={selectedOption}
+                onChange={this.handleChange}
+                options={this.state.level1.map(spell => ({ label: spell.name, value: spell.name }))}
+              />
+            </div>
+          </div>
+
+          <div><h2>level 2</h2>
+            <div className="select_contain"><Select
+              value={selectedOption}
+              onChange={this.handleChange}
+              options={this.state.level2.map(spell => ({ label: spell.name, value: spell.name }))}
+            /></div>
+          </div>
+          <div><h2>level 3</h2>
+            <div className="select_contain"><Select
+              value={selectedOption}
+              onChange={this.handleChange}
+              options={this.state.level3.map(spell => ({ label: spell.name, value: spell.name }))}
+            /></div>
+          </div>
+          <div><h2>level 4</h2>
+            <div className="select_contain"><Select
+              value={selectedOption}
+              onChange={this.handleChange}
+              options={this.state.level4.map(spell => ({ label: spell.name, value: spell.name }))}
+            /></div>
+          </div>
+          <div><h2>level 5</h2>
+            <div className="select_contain"><Select
+              value={selectedOption}
+              onChange={this.handleChange}
+              options={this.state.level5.map(spell => ({ label: spell.name, value: spell.name }))}
+            /></div>
+          </div>
+          <div><h2>level 6</h2>
+            <div className="select_contain"><Select
+              value={selectedOption}
+              onChange={this.handleChange}
+              options={this.state.level6.map(spell => ({ label: spell.name, value: spell.name }))}
+            /></div>
+          </div>
+          <div><h2>level 7</h2>
+            <div className="select_contain"><Select
+              value={selectedOption}
+              onChange={this.handleChange}
+              options={this.state.level7.map(spell => ({ label: spell.name, value: spell.name }))}
+            /></div>
+          </div>
+          <div><h2>level 8</h2>
+            <div className="select_contain"><Select
+              value={selectedOption}
+              onChange={this.handleChange}
+              options={this.state.level8.map(spell => ({ label: spell.name, value: spell.name }))}
+            /></div>
+          </div>
+          <div><h2>level 9</h2>
+            <div className="select_contain"><Select
+              value={selectedOption}
+              onChange={this.handleChange}
+              options={this.state.level9.map(spell => ({ label: spell.name, value: spell.name }))}
+            /></div>
+          </div>
 
 
-          {this.state.cantrips.map((cantrip) => {
-            if (cantrip.level === 'cantrip')
-              return <div>
-                <p>{cantrip.name}</p>
-                <button onClick={()=>this.deleteSpell(cantrip.id)}>x</button>
-                </div>
-          })}
-
-        
-        <div>level 1
-          {this.state.cantrips.map((cantrip) => {
-          if (cantrip.level === '1')
-            return <p>{cantrip.name}</p>
-        })}
-
-        </div>
-        <div>level 2
-          {this.state.cantrips.map((cantrip) => {
-          if (cantrip.level === '2')
-            return <p>{cantrip.name}</p>
-        })}
-        </div>
-        <div>level 3
-          {this.state.cantrips.map((cantrip) => {
-          if (cantrip.level === '3')
-            return <p>{cantrip.name}</p>
-        })}
-        </div>
-        <div>level 4
-          {this.state.cantrips.map((cantrip) => {
-          if (cantrip.level === '4')
-            return <p>{cantrip.name}</p>
-        })}
-        </div>
-        <div>level 5
-          {this.state.cantrips.map((cantrip) => {
-          if (cantrip.level === '5')
-            return <p>{cantrip.name}</p>
-        })}
-        </div>
-        <div>level 6
-          {this.state.cantrips.map((cantrip) => {
-          if (cantrip.level === '6')
-            return <p>{cantrip.name}</p>
-        })}
-        </div>
-        <div>level 7
-          {this.state.cantrips.map((cantrip) => {
-          if (cantrip.level === '7')
-            return <p>{cantrip.name}</p>
-        })}
-        </div>
-        <div>level 8
-          {this.state.cantrips.map((cantrip) => {
-          if (cantrip.level === '8')
-            return <p>{cantrip.name}</p>
-        })}
-        </div>
-        <div>level 9
-          {this.state.cantrips.map((cantrip) => {
-          if (cantrip.level === '9')
-            return <p>{cantrip.name}</p>
-        })}
-        </div>
 
 
+        </div>
+        <FooterNav char_name={this.state.char_name} />
 
-      </div>
-      <FooterNav char_name={this.state.char_name} />
+      </div >
 
-        </div >
-
-        )
+    )
   }
 }
