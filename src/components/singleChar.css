@@ -38,16 +38,24 @@
 }
 
 .char_name_container{
+  grid-row: 2;
+  grid-column: 1/2;
+}
+.delete_button{
   grid-row: 1;
-  grid-column: 1/4;
+  grid-column: 4/4;
+}
+.char_last_name_container{
+  grid-row: 2;
+  grid-column: 3/4;
 }
 .char_class_container{
-  grid-row: 2;
-  grid-column: 1/4;
+  grid-row: 3;
+  grid-column: 3/4;
 }
 .char_party_container{
   grid-row: 3;
-  grid-column: 1/4;
+  grid-column: 1/2;
 }
 
 .select_char_container{
@@ -160,8 +168,13 @@
   text-align: center;
 }
 
-.spell_grid_container{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+
+
+.char_flex_box{
+  border: solid 1px;
+  display: flex;
+}
+
+.select_contain{
+  width: 300px;
 }
