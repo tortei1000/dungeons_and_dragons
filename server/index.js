@@ -6,9 +6,11 @@ const session = require('express-session')
 const Auth_ctrl = require('./controllers/Auth_ctrl')
 const Chars_ctrl = require('./controllers/Chars_ctrl')
 const Edit_ctrl = require('./controllers/Edit_ctrl')
+const cors = require('cors')
 
 
 const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING} = process.env
+
 
 
 

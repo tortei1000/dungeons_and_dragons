@@ -41,15 +41,7 @@ class Home extends Component {
           </div>
         ) : (
             <div >
-              <ul className="login_register_container">
-                        <li className="login_container">
-                            <Link to='/login' className="login_text">Login</Link>
-                        </li>
-                        <li className="register_container">
-                            <Link to='/register' className="register_text">Get Started</Link>
-                        </li>
-                    </ul>
-              not logged in
+              {this.props.history.push('/')}  
             </div>
           )}
 

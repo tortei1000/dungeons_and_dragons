@@ -136,24 +136,24 @@ module.exports = {
     
   },
   getOneSpells: async (req,res) => {
-    
+    console.log(req.body, 'this is the get for spells')
     const db = req.app.get('db')
     let { id } = req.session.user
     let {char_name} = req.body
 
-    let thisCharSpells = await db.get_one_spells([id, char_name])
+    let thisCharSpells = await db.get_one_spells([char_name, id])
     
     res.send(thisCharSpells)
         
   },
   addCantrip: async (req,res) => {
-    console.log(req.body)
+    
     const db = req.app.get('db')
     
-    let {id, cantripName, spell_level} = req.body
+    let {id, cantripName, spellLevel} = req.body
     
 
-    let thisCharSpells = await db.add_cantrip([id, cantripName, spell_level])
+    let thisCharSpells = await db.add_cantrip([id, cantripName, spellLevel])
     
     res.send(thisCharSpells)
         
