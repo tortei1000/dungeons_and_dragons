@@ -138,7 +138,7 @@ class CharacterCard extends Component {
   }
 
   handleCategories = ( event ) => {
-    console.log(event.target.value)
+    
     this.props.history.push(`/singlechar/${event.target.value}`)
   } 
 

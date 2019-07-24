@@ -13,6 +13,7 @@ export default class Spells extends Component {
     selectedOption: null,
     spell_level: null,
     cantrips: [],
+    level0: [],
     level1: [],
     level2: [],
     level3: [],
@@ -22,93 +23,8 @@ export default class Spells extends Component {
     level7: [],
     level8: [],
     level9: [],
-    traits: false,
-    featuresToggle: false,
-    createFeature: false,
-    createProfToggle: false,
-    gearToggle: false,
-    createGearToggle: false,
-    attackToggle: false,
-    createAttToggle: false,
-    perceptionToggle: false,
-    profToggle: false,
-    armorToggle: false,
-    languages: [],
-    proficiencies: [],
-    attacks: [],
-    dungeoneerPack: [],
-    outlanderGear: [],
-    features: [],
-    edit: false,
-    char_name: null,
-    char_class: null,
-    char_level: null,
-    race: null,
-    background: null,
-    alignment: null,
-    player_name: null,
-    experience_points: null,
-    str: null,
-    dex: null,
-    con: null,
-    intel: null,
-    wis: null,
-    cha: null,
-    inspiration: null,
-    proficiency_bonus: null,
-    sav_str: null,
-    sav_dex: null,
-    sav_con: null,
-    sav_int: null,
-    sav_wis: null,
-    sav_cha: null,
-    armor_class: null,
-    initiative: null,
-    speed: null,
-    hit_point_max: null,
-    current_hit_points: null,
-    temporary_hit_points: null,
-    hit_dice: null,
-    success_1: null,
-    success_2: null,
-    success_3: null,
-    failures_1: null,
-    failures_2: null,
-    failures_3: null,
-    personality_trait: null,
-    ideal: null,
-    bond: null,
-    flaw: null,
-    str_bonus: null,
-    dex_bonus: null,
-    con_bonus: null,
-    int_bonus: null,
-    wis_bonus: null,
-    cha_bonus: null,
-    passive_perception: null,
-    acrobatics: null,
-    animal_handling: null,
-    arcana: null,
-    athletics: null,
-    deception: null,
-    history: null,
-    insight: null,
-    intimidation: null,
-    investigation: null,
-    medicine: null,
-    nature: null,
-    perception: null,
-    performance: null,
-    persuation: null,
-    religion: null,
-    sleight_of_hand: null,
-    stealth: null,
-    survival: null,
     spells: [],
-    attToggle: false,
-    skillsToggle: false
-
-  }
+    }
 
 
 
@@ -191,56 +107,17 @@ export default class Spells extends Component {
 
       })
     })
-    await axios.post(`/api/languages/`, { char_name }).then(res => {
-      this.setState({
-        languages: res.data,
-      })
-    })
-    await axios.post(`/api/prof/`, { char_name }).then(res => {
-      this.setState({
-        proficiencies: res.data,
-      })
-    })
-    await axios.post(`/api/attacks/`, { char_name }).then(res => {
-      this.setState({
-        attacks: res.data,
-      })
-    })
-
-    await axios.post(`/api/dPack/`, { char_name }).then(res => {
-      this.setState({
-        dungeoneerPack: res.data,
-      })
-    })
-
-    await axios.post(`/api/outlander/`, { char_name }).then(res => {
-      this.setState({
-        outlanderGear: res.data,
-      })
-    })
-
-    await axios.post(`/api/features/`, { char_name }).then(res => {
-      this.setState({
-        features: res.data,
-      })
-    })
-
-    await axios.post('/api/spells/', { char_name }).then(res => {
-      this.setState({
-        spells: res.data
-      })
-    })
-
     await axios.post('/api/cantrips/', { char_name }).then(res => {
       this.setState({
         cantrips: res.data
       })
     })
-    await axios.post('/api/level1/', { char_name }).then(res => {
+    await axios.post('/api/spells/', {char_name}).then(res=>{
       this.setState({
-        level1: res.data
+        spells: res.data
       })
     })
+    
 
   }
 
@@ -250,9 +127,10 @@ export default class Spells extends Component {
   };
 
   addSpell = () => {
-    let { selectedOption, id, spell_level } = this.state
+    let { selectedOption, id } = this.state
     let cantripName = selectedOption.label
-    axios.post(`/api/addcantrips/`, { id, cantripName, spell_level }).then(res => {
+    let spellLevel = selectedOption.value
+    axios.post(`/api/addcantrips/`, { id, cantripName, spellLevel }).then(res => {
       this.setState({
         cantrips: res.data
       })
@@ -279,95 +157,83 @@ export default class Spells extends Component {
 
 
   render() {
-    console.log('this is the render', this.state.cantrips)
-    const { selectedOption } = this.state
+    console.log('this is the render', this.state.spells)
+    const { selectedOption, spells } = this.state
 
 
 
     return (
       <div>
-
-        {/* <input value={this.state.spell_level} name='spell_level' placeholder='level' onChange={this.inputChange} />
-        <button onClick={this.addSpell}>+</button> */}
+        <Select
+          value={selectedOption}
+          onChange={this.handleChange}
+          options={this.state.cantrips.map(spell => ({ label: spell.name, value: spell.level }))}
+        />
+        <button onClick={this.addSpell}>+</button>
         <div className="spell_grid_container">
           <div>
             <h2>Cantrips</h2>
-            <div className="select_contain">
-              <Select
-                value={selectedOption}
-                onChange={this.handleChange}
-                options={this.state.cantrips.map(spell => ({ label: spell.name, value: spell.name }))}
-              />
-            </div>
-            <button onClick={this.addSpell}>+</button> 
+            {spells.map((spell)=>{
+              if(spell.level === '0')
+              return <p>{spell.name}</p>
+            })}
           </div>
 
           <div>
             <h2>level 1</h2>
-            <div className="select_contain">
-              <Select
-                value={selectedOption}
-                onChange={this.handleChange}
-                options={this.state.level1.map(spell => ({ label: spell.name, value: spell.name }))}
-              />
-            </div>
+            {spells.map((spell)=>{
+              if(spell.level === '1')
+              return <p>{spell.name}</p>
+            })}
           </div>
 
           <div><h2>level 2</h2>
-            <div className="select_contain"><Select
-              value={selectedOption}
-              onChange={this.handleChange}
-              options={this.state.level2.map(spell => ({ label: spell.name, value: spell.name }))}
-            /></div>
+          {spells.map((spell)=>{
+              if(spell.level === '2')
+              return <p>{spell.name}</p>
+            })}
           </div>
           <div><h2>level 3</h2>
-            <div className="select_contain"><Select
-              value={selectedOption}
-              onChange={this.handleChange}
-              options={this.state.level3.map(spell => ({ label: spell.name, value: spell.name }))}
-            /></div>
+          {spells.map((spell)=>{
+              if(spell.level === '3')
+              return <p>{spell.name}</p>
+            })}
           </div>
           <div><h2>level 4</h2>
-            <div className="select_contain"><Select
-              value={selectedOption}
-              onChange={this.handleChange}
-              options={this.state.level4.map(spell => ({ label: spell.name, value: spell.name }))}
-            /></div>
+          {spells.map((spell)=>{
+              if(spell.level === '4')
+              return <p>{spell.name}</p>
+            })}
           </div>
           <div><h2>level 5</h2>
-            <div className="select_contain"><Select
-              value={selectedOption}
-              onChange={this.handleChange}
-              options={this.state.level5.map(spell => ({ label: spell.name, value: spell.name }))}
-            /></div>
+          {spells.map((spell)=>{
+              if(spell.level === '5')
+              return <p>{spell.name}</p>
+            })}
           </div>
           <div><h2>level 6</h2>
-            <div className="select_contain"><Select
-              value={selectedOption}
-              onChange={this.handleChange}
-              options={this.state.level6.map(spell => ({ label: spell.name, value: spell.name }))}
-            /></div>
+          {spells.map((spell)=>{
+              if(spell.level === '6')
+              return <p>{spell.name}</p>
+            })} 
           </div>
           <div><h2>level 7</h2>
-            <div className="select_contain"><Select
-              value={selectedOption}
-              onChange={this.handleChange}
-              options={this.state.level7.map(spell => ({ label: spell.name, value: spell.name }))}
-            /></div>
+          {spells.map((spell)=>{
+              if(spell.level === '7')
+              return <p>{spell.name}</p>
+            })}
           </div>
           <div><h2>level 8</h2>
-            <div className="select_contain"><Select
-              value={selectedOption}
-              onChange={this.handleChange}
-              options={this.state.level8.map(spell => ({ label: spell.name, value: spell.name }))}
-            /></div>
+          {spells.map((spell)=>{
+              if(spell.level === '8')
+              return <p>{spell.name}</p>
+            })}
           </div>
           <div><h2>level 9</h2>
-            <div className="select_contain"><Select
-              value={selectedOption}
-              onChange={this.handleChange}
-              options={this.state.level9.map(spell => ({ label: spell.name, value: spell.name }))}
-            /></div>
+          {spells.map((spell)=>{
+              if(spell.level === '9')
+              return <p>{spell.name}</p>
+            })}
           </div>
 
 

@@ -8,7 +8,7 @@ export default class Combat extends Component {
    
   render(){
     
-    console.log(this.props.char_name)
+    
     return(
       <div className='bottom_nav'>
         <p className='bottom_link'><Link to={`/combat/${this.props.char_name}`} ><p className='text_link'>COMBAT</p></Link></p>
