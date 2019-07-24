@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import './singleChar.css'
 import FooterNav from './FooterNav'
+import Skills from './Skills'
 
 
 export default class SingleChar extends Component {
@@ -487,9 +488,18 @@ export default class SingleChar extends Component {
 
     //----end of saving to DB -----
 
+    proficientAdd = (e) => {
+        let { name, value } = e.target
+        let {proficiency_bonus} = this.state
+        
+        this.setState({
+            [`${name}`]: eval(value) + proficiency_bonus
+        })
+        
+    }
+
     render() {
 
-        console.log(this.state.languages)
         let { char, languages, proficiencies, attacks, dungeoneerPack, outlanderGear, features } = this.state
 
         return (
@@ -598,26 +608,84 @@ export default class SingleChar extends Component {
                                 <p>Charisma: <input name='sav_cha' value={this.state.sav_cha} onChange={this.handleChange} /></p>
                             </div>
                             <div>Skills:
-                                <p><input name='acrobatics' value={this.state.acrobatics} onChange={this.handleChange} /> Acrobatics (Dex)</p>
-                                <p><input name='animal_handling' value={this.state.animal_handling} onChange={this.handleChange} /> Animal Handling (Wis)</p>
-                                <p><input name='arcana' value={this.state.arcana} onChange={this.handleChange} /> arcana (Int)</p>
-                                <p><input name='athletics' value={this.state.athletics} onChange={this.handleChange} /> athletics (Str)</p>
-                                <p><input name='deception' value={this.state.deception} onChange={this.handleChange} /> deception (Cha)</p>
-                                <p><input name='history' value={this.state.history} onChange={this.handleChange} /> history (Int)</p>
-                                <p><input name='insight' value={this.state.insight} onChange={this.handleChange} /> insight (Wis)</p>
-                                <p><input name='intimidation' value={this.state.intimidation} onChange={this.handleChange} /> intimidation (Cha)</p>
-                                <p><input name='investigation' value={this.state.investigation} onChange={this.handleChange} /> investigation (Int)</p>
-                                <p><input name='medicine' value={this.state.medicine} onChange={this.handleChange} /> medicine (Wis)</p>
-                                <p><input name='nature' value={this.state.nature} onChange={this.handleChange} /> nature (Int)</p>
-                                <p><input name='perception' value={this.state.perception} onChange={this.handleChange} /> perception (Wis)</p>
-                                <p><input name='performance' value={this.state.performance} onChange={this.handleChange} /> performance (Cha)</p>
-                                <p><input name='persuation' value={this.state.persuation} onChange={this.handleChange} /> persuation (Cha)</p>
-                                <p><input name='religion' value={this.state.religion} onChange={this.handleChange} /> religion (Int)</p>
-                                <p><input name='sleight_of_hand' value={this.state.sleight_of_hand} onChange={this.handleChange} /> sleight of hand (Dex)</p>
-                                <p><input name='stealth' value={this.state.stealth} onChange={this.handleChange} /> stealth (Dex)</p>
-                                <p><input name='survival' value={this.state.survival} onChange={this.handleChange} /> survival (Wis)</p>
-<button className='button_char' onClick={this.saveSkills}>save</button>
-<button className='button_char' name="skillsToggle" value={this.state.skillsToggle} onClick={this.armorToggle}>cancel</button>
+                                <p> 
+                                    <button className='button_char' value='this.state.acrobatics' name="acrobatics" onClick={e => this.strAdd(e)}>+</button>
+                                    <button className='button_char' value='this.state.acrobatics' name="acrobatics" onClick={this.strSub}>-</button> Acrobatics (Dex): {this.state.acrobatics}
+                                      proficient? 
+                                    <input type='checkbox' className='button_char' value={this.state.acrobatics} name="acrobatics" onClick={this.proficientAdd} />
+                                    
+                                </p>
+                                <p>
+                                    <button className='button_char' value='this.state.animal_handling' name="animal_handling" onClick={e => this.strAdd(e)}>+</button>
+                                    <button className='button_char' value='this.state.animal_handling' name="animal_handling" onClick={this.strSub}>-</button> Animal Handling (Wis): {this.state.animal_handling}
+                                </p>
+                                <p>
+                                    <button className='button_char' value='this.state.arcana' name="arcana" onClick={e => this.strAdd(e)}>+</button>
+                                    <button className='button_char' value='this.state.arcana' name="arcana" onClick={this.strSub}>-</button> Arcana (Int): {this.state.arcana}
+                                </p>
+                                <p>
+                                    <button className='button_char' value='this.state.athletics' name="athletics" onClick={e => this.strAdd(e)}>+</button>
+                                    <button className='button_char' value='this.state.athletics' name="athletics" onClick={this.strSub}>-</button> Athletics (Str): {this.state.athletics}
+                                </p>
+                                <p>
+                                    <button className='button_char' value='this.state.deception' name="deception" onClick={e => this.strAdd(e)}>+</button>
+                                    <button className='button_char' value='this.state.deception' name="deception" onClick={this.strSub}>-</button> Deception (Cha): {this.state.deception}
+                                </p>
+                                <p>
+                                    <button className='button_char' value='this.state.history' name="history" onClick={e => this.strAdd(e)}>+</button>
+                                    <button className='button_char' value='this.state.history' name="history" onClick={this.strSub}>-</button> History (Int): {this.state.history}
+                                </p>
+                                <p>
+                                    <button className='button_char' value='this.state.insight' name="insight" onClick={e => this.strAdd(e)}>+</button>
+                                    <button className='button_char' value='this.state.insight' name="insight" onClick={this.strSub}>-</button> Insight (Wis): {this.state.insight}
+                                </p>
+                                <p>
+                                    <button className='button_char' value='this.state.intimidation' name="intimidation" onClick={e => this.strAdd(e)}>+</button>
+                                    <button className='button_char' value='this.state.intimidation' name="intimidation" onClick={this.strSub}>-</button> Intimidation (Cha): {this.state.intimidation}
+                                </p>
+                                <p>
+                                    <button className='button_char' value='this.state.investigation' name="investigation" onClick={e => this.strAdd(e)}>+</button>
+                                    <button className='button_char' value='this.state.investigation' name="investigation" onClick={this.strSub}>-</button> Investigation (Int): {this.state.investigation}
+                                </p>
+                                <p>
+                                    <button className='button_char' value='this.state.medicine' name="medicine" onClick={e => this.strAdd(e)}>+</button>
+                                    <button className='button_char' value='this.state.medicine' name="medicine" onClick={this.strSub}>-</button> Medicine (Wis): {this.state.medicine}
+                                </p>
+                                <p>
+                                    <button className='button_char' value='this.state.nature' name="nature" onClick={e => this.strAdd(e)}>+</button>
+                                    <button className='button_char' value='this.state.nature' name="nature" onClick={this.strSub}>-</button> Nature (Int): {this.state.nature}
+                                </p>
+                                <p>
+                                    <button className='button_char' value='this.state.perception' name="perception" onClick={e => this.strAdd(e)}>+</button>
+                                    <button className='button_char' value='this.state.perception' name="perception" onClick={this.strSub}>-</button> Perception (Wis): {this.state.perception}
+                                </p>
+                                <p>
+                                    <button className='button_char' value='this.state.performance' name="performance" onClick={e => this.strAdd(e)}>+</button>
+                                    <button className='button_char' value='this.state.performance' name="performance" onClick={this.strSub}>-</button> Performance (Cha): {this.state.performance}
+                                </p>
+                                <p>
+                                    <button className='button_char' value='this.state.persuation' name="persuation" onClick={e => this.strAdd(e)}>+</button>
+                                    <button className='button_char' value='this.state.persuation' name="persuation" onClick={this.strSub}>-</button> Persuation (Cha): {this.state.persuation}
+                                </p>
+                                <p>
+                                    <button className='button_char' value='this.state.religion' name="religion" onClick={e => this.strAdd(e)}>+</button>
+                                    <button className='button_char' value='this.state.religion' name="religion" onClick={this.strSub}>-</button> Religion (Int): {this.state.religion}
+                                </p>
+                                <p>
+                                    <button className='button_char' value='this.state.sleight_of_hand' name="sleight_of_hand" onClick={e => this.strAdd(e)}>+</button>
+                                    <button className='button_char' value='this.state.sleight_of_hand' name="sleight_of_hand" onClick={this.strSub}>-</button> Sleight of hand (Dex): {this.state.sleight_of_hand}
+                                </p>
+                                <p>
+                                    <button className='button_char' value='this.state.stealth' name="stealth" onClick={e => this.strAdd(e)}>+</button>
+                                    <button className='button_char' value='this.state.stealth' name="stealth" onClick={this.strSub}>-</button> Stealth (Dex): {this.state.stealth}
+                                </p>
+                                <p>
+                                    <button className='button_char' value='this.state.survival' name="survival" onClick={e => this.strAdd(e)}>+</button>
+                                    <button className='button_char' value='this.state.survival' name="survival" onClick={this.strSub}>-</button> Survival (Wis): {this.state.survival}
+                                </p>
+                                
+                                <button className='button_char' onClick={this.saveSkills}>save</button>
+                                <button className='button_char' name="skillsToggle" value={this.state.skillsToggle} onClick={this.armorToggle}>cancel</button>
                             </div>
                         </div>
 
@@ -1024,7 +1092,9 @@ export default class SingleChar extends Component {
                         })}
                         </div>
                     }
-                
+                        {/* <Skills char_name = {this.props.match.params.char_name}
+                        acrobatics = {this.state.acrobatics}
+                        /> */}
                    
 
                 </div>
