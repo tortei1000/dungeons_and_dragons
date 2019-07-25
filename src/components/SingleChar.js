@@ -491,10 +491,17 @@ export default class SingleChar extends Component {
     proficientAdd = (e) => {
         let { name, value } = e.target
         let {proficiency_bonus} = this.state
-        
-        this.setState({
+        console.log(e.target.checked)
+        if(e.target.checked){
+          return this.setState({
             [`${name}`]: eval(value) + proficiency_bonus
-        })
+        })  
+        } else {
+            return this.setState({
+                [`${name}`]: eval(value) - proficiency_bonus
+            })  
+        }
+        
         
     }
 
@@ -607,81 +614,115 @@ export default class SingleChar extends Component {
                                 <p>Wisdon: <input name='sav_wis' value={this.state.sav_wis} onChange={this.handleChange} /></p>
                                 <p>Charisma: <input name='sav_cha' value={this.state.sav_cha} onChange={this.handleChange} /></p>
                             </div>
-                            <div>Skills:
+                            <div>Skills:              proficient? 
                                 <p> 
                                     <button className='button_char' value='this.state.acrobatics' name="acrobatics" onClick={e => this.strAdd(e)}>+</button>
                                     <button className='button_char' value='this.state.acrobatics' name="acrobatics" onClick={this.strSub}>-</button> Acrobatics (Dex): {this.state.acrobatics}
-                                      proficient? 
-                                    <input type='checkbox' className='button_char' value={this.state.acrobatics} name="acrobatics" onClick={this.proficientAdd} />
-                                    
+                                         
+                                    <input type='checkbox' className='button_char' value={this.state.acrobatics} name="acrobatics" onChange={this.proficientAdd} />
+                                                                        
                                 </p>
                                 <p>
                                     <button className='button_char' value='this.state.animal_handling' name="animal_handling" onClick={e => this.strAdd(e)}>+</button>
                                     <button className='button_char' value='this.state.animal_handling' name="animal_handling" onClick={this.strSub}>-</button> Animal Handling (Wis): {this.state.animal_handling}
+                                    <input type='checkbox' className='button_char' value={this.state.animal_handling} name="animal_handling" onChange={this.proficientAdd} />
+                                    
                                 </p>
                                 <p>
                                     <button className='button_char' value='this.state.arcana' name="arcana" onClick={e => this.strAdd(e)}>+</button>
                                     <button className='button_char' value='this.state.arcana' name="arcana" onClick={this.strSub}>-</button> Arcana (Int): {this.state.arcana}
+                                    <input type='checkbox' className='button_char' value={this.state.arcana} name="arcana" onChange={this.proficientAdd} />
+                                    
                                 </p>
                                 <p>
                                     <button className='button_char' value='this.state.athletics' name="athletics" onClick={e => this.strAdd(e)}>+</button>
                                     <button className='button_char' value='this.state.athletics' name="athletics" onClick={this.strSub}>-</button> Athletics (Str): {this.state.athletics}
+                                <input type='checkbox' className='button_char' value={this.state.athletics} name="athletics" onChange={this.proficientAdd} />
+                                      
                                 </p>
                                 <p>
                                     <button className='button_char' value='this.state.deception' name="deception" onClick={e => this.strAdd(e)}>+</button>
                                     <button className='button_char' value='this.state.deception' name="deception" onClick={this.strSub}>-</button> Deception (Cha): {this.state.deception}
+                                <input type='checkbox' className='button_char' value={this.state.deception} name="deception" onChange={this.proficientAdd} />
+                                      
                                 </p>
                                 <p>
                                     <button className='button_char' value='this.state.history' name="history" onClick={e => this.strAdd(e)}>+</button>
                                     <button className='button_char' value='this.state.history' name="history" onClick={this.strSub}>-</button> History (Int): {this.state.history}
+                                <input type='checkbox' className='button_char' value={this.state.history} name="history" onChange={this.proficientAdd} />
+                                      
                                 </p>
                                 <p>
                                     <button className='button_char' value='this.state.insight' name="insight" onClick={e => this.strAdd(e)}>+</button>
                                     <button className='button_char' value='this.state.insight' name="insight" onClick={this.strSub}>-</button> Insight (Wis): {this.state.insight}
+                                <input type='checkbox' className='button_char' value={this.state.insight} name="insight" onChange={this.proficientAdd} />
+                                      
                                 </p>
                                 <p>
                                     <button className='button_char' value='this.state.intimidation' name="intimidation" onClick={e => this.strAdd(e)}>+</button>
                                     <button className='button_char' value='this.state.intimidation' name="intimidation" onClick={this.strSub}>-</button> Intimidation (Cha): {this.state.intimidation}
+                                <input type='checkbox' className='button_char' value={this.state.intimidation} name="intimidation" onChange={this.proficientAdd} />
+                                      
                                 </p>
                                 <p>
                                     <button className='button_char' value='this.state.investigation' name="investigation" onClick={e => this.strAdd(e)}>+</button>
                                     <button className='button_char' value='this.state.investigation' name="investigation" onClick={this.strSub}>-</button> Investigation (Int): {this.state.investigation}
+                                <input type='checkbox' className='button_char' value={this.state.investigation} name="investigation" onChange={this.proficientAdd} />
+                                      
                                 </p>
                                 <p>
                                     <button className='button_char' value='this.state.medicine' name="medicine" onClick={e => this.strAdd(e)}>+</button>
                                     <button className='button_char' value='this.state.medicine' name="medicine" onClick={this.strSub}>-</button> Medicine (Wis): {this.state.medicine}
+                                <input type='checkbox' className='button_char' value={this.state.medicine} name="medicine" onChange={this.proficientAdd} />
+                                      
                                 </p>
                                 <p>
                                     <button className='button_char' value='this.state.nature' name="nature" onClick={e => this.strAdd(e)}>+</button>
                                     <button className='button_char' value='this.state.nature' name="nature" onClick={this.strSub}>-</button> Nature (Int): {this.state.nature}
+                                <input type='checkbox' className='button_char' value={this.state.nature} name="nature" onChange={this.proficientAdd} />
+                                      
                                 </p>
                                 <p>
                                     <button className='button_char' value='this.state.perception' name="perception" onClick={e => this.strAdd(e)}>+</button>
                                     <button className='button_char' value='this.state.perception' name="perception" onClick={this.strSub}>-</button> Perception (Wis): {this.state.perception}
+                                <input type='checkbox' className='button_char' value={this.state.perception} name="perception" onChange={this.proficientAdd} />
+                                      
                                 </p>
                                 <p>
                                     <button className='button_char' value='this.state.performance' name="performance" onClick={e => this.strAdd(e)}>+</button>
                                     <button className='button_char' value='this.state.performance' name="performance" onClick={this.strSub}>-</button> Performance (Cha): {this.state.performance}
+                                <input type='checkbox' className='button_char' value={this.state.performance} name="performance" onChange={this.proficientAdd} />
+                                      
                                 </p>
                                 <p>
                                     <button className='button_char' value='this.state.persuation' name="persuation" onClick={e => this.strAdd(e)}>+</button>
                                     <button className='button_char' value='this.state.persuation' name="persuation" onClick={this.strSub}>-</button> Persuation (Cha): {this.state.persuation}
+                                <input type='checkbox' className='button_char' value={this.state.persuation} name="persuation" onChange={this.proficientAdd} />
+                                      
                                 </p>
                                 <p>
                                     <button className='button_char' value='this.state.religion' name="religion" onClick={e => this.strAdd(e)}>+</button>
                                     <button className='button_char' value='this.state.religion' name="religion" onClick={this.strSub}>-</button> Religion (Int): {this.state.religion}
+                                <input type='checkbox' className='button_char' value={this.state.religion} name="religion" onChange={this.proficientAdd} />
+                                      
                                 </p>
                                 <p>
                                     <button className='button_char' value='this.state.sleight_of_hand' name="sleight_of_hand" onClick={e => this.strAdd(e)}>+</button>
                                     <button className='button_char' value='this.state.sleight_of_hand' name="sleight_of_hand" onClick={this.strSub}>-</button> Sleight of hand (Dex): {this.state.sleight_of_hand}
+                                <input type='checkbox' className='button_char' value={this.state.sleight_of_hand} name="sleight_of_hand" onChange={this.proficientAdd} />
+                                      
                                 </p>
                                 <p>
                                     <button className='button_char' value='this.state.stealth' name="stealth" onClick={e => this.strAdd(e)}>+</button>
                                     <button className='button_char' value='this.state.stealth' name="stealth" onClick={this.strSub}>-</button> Stealth (Dex): {this.state.stealth}
+                                <input type='checkbox' className='button_char' value={this.state.stealth} name="stealth" onChange={this.proficientAdd} />
+                                      
                                 </p>
                                 <p>
                                     <button className='button_char' value='this.state.survival' name="survival" onClick={e => this.strAdd(e)}>+</button>
                                     <button className='button_char' value='this.state.survival' name="survival" onClick={this.strSub}>-</button> Survival (Wis): {this.state.survival}
+                                <input type='checkbox' className='button_char' value={this.state.survival} name="survival" onChange={this.proficientAdd} />
+                                      
                                 </p>
                                 
                                 <button className='button_char' onClick={this.saveSkills}>save</button>
